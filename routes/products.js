@@ -49,8 +49,8 @@ router.post("/products", async (req, res) => {
 });
 
 // Test route
-router.get("/test", (req, res) => {
-  res.json({ message: "Test route is working!" });
+router.get("/", (req, res) => {
+  res.json({ message: "Api is working!" });
 });
 
 // Get all products from the database
