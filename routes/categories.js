@@ -2,7 +2,7 @@ const express = require('express')
 const Category = require('../models/categories.models')
 const router = express.Router()
 
-//newCategory
+// newCategory
 // const newCategories = [
 //   {
 //     categoryName: "Printed Shirt",
