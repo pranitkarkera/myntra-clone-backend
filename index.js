@@ -16,8 +16,14 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 
-app.use("/", productRoutes);
-app.use("/", categoryRoutes);
+// Test route
+app.get("/", (req, res) => {
+  res.json({ message: "Api is working!" });
+});
+
+app.use("/api/products", productRoutes);
+app.use("/api/categories", categoryRoutes);
+
 
 initializeDatabase();
 

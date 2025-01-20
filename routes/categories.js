@@ -50,7 +50,7 @@ async function createCategory(categories) {
     }
 }
 
-router.post('/categories', async (req, res) => {
+router.post('categories', async (req, res) => {
     try{
         console.log(req.body)
         const savedCategories = await createCategory(req.body)
@@ -72,18 +72,18 @@ async function readAllCategories() {
 }
 
 
-router.get('/categories', async (req, res) => {
-    try {
-        const categories = await readAllCategories()
-        if(categories.length != 0){
-            res.json({ data: { categories } });
-        }else{
-            res.status(404).json({error: "Categories not found"})
-        }
-    } catch (error) {
-        res.status(500).json({error: "Failed to fetch categories"})
+router.get("/", async (req, res) => {
+  try {
+    const categories = await readAllCategories();
+    if (categories.length != 0) {
+      res.json({ data: { categories } });
+    } else {
+      res.status(404).json({ error: "Categories not found" });
     }
-})
+  } catch (error) {
+    res.status(500).json({ error: "Failed to fetch categories" });
+  }
+});
 
 //get categories by Id
 
@@ -96,7 +96,7 @@ async function getCategoriesById(categoryId) {
     }
 }
 
-router.get('/categories/:categoryId', async (req, res) => {
+router.get('/:categoryId', async (req, res) => {
     try {
         const category = await getCategoriesById(req.params.categoryId);
         if(category){

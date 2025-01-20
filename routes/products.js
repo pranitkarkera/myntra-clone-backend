@@ -617,6 +617,7 @@ const categoryId = {
 // ];
 
 
+
 // Post products in the database
 
 async function createProducts(products) {
@@ -638,19 +639,16 @@ async function createProducts(products) {
 }
 
 // Route to create products
-router.post("/products", async (req, res) => {
+router.post("/", async (req, res) => {
   try {
     console.log(req.body);
     const savedProducts = await createProducts(req.body);
     res.status(200).json({ message: "New Product created", savedProducts });
   } catch (error) {
-    res.status(500).json({ error: "Failed to create a product" });
+    res
+      .status(500)
+      .json({ error: error.message || "Failed to create a product" });
   }
-});
-
-// Test route
-router.get("/", (req, res) => {
-  res.json({ message: "Api is working!" });
 });
 
 // Get all products from the database
@@ -664,7 +662,7 @@ async function readAllProducts() {
 }
 
 // Route to get all products
-router.get("/products", async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     const products = await readAllProducts();
     if (products.length !== 0) {
@@ -673,7 +671,9 @@ router.get("/products", async (req, res) => {
       res.status(404).json({ error: "No products found" });
     }
   } catch (error) {
-    res.status(500).json({ error: "Failed to fetch products" });
+    res
+      .status(500)
+      .json({ error: error.message || "Failed to fetch products" });
   }
 });
 
@@ -688,7 +688,7 @@ async function getProductByID(productId) {
 }
 
 // Route to get a product by ID
-router.get("/products/:productId", async (req, res) => {
+router.get("/:productId", async (req, res) => {
   try {
     const product = await getProductByID(req.params.productId);
     if (product) {
@@ -697,7 +697,7 @@ router.get("/products/:productId", async (req, res) => {
       res.status(404).json({ error: "Product not found" });
     }
   } catch (error) {
-    res.status(500).json({ error: "Failed to fetch product" });
+    res.status(500).json({ error: error.message || "Failed to fetch product" });
   }
 });
 
