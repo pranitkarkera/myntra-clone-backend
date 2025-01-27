@@ -20,7 +20,7 @@ const router = express.Router();
 //     productId: "828019",
 //     brandName: "LEVIS",
 //     productName: "Slim Fit Printed Casual Shirt",
-//     categoryId: "678903d96080288c4dcc1b4d", // Printed Shirt
+//     categoryId: "0001", // Printed Shirt
 //     price: 2639,
 //     images: [
 //       "https://assets.myntassets.com/h_1440,q_90,w_1080/v1/assets/images/13358668/2021/2/8/fea23466-ad54-49ec-aaba-bab98fb1a9e61612774385309-Levis-Men-Shirts-9061612774383873-1.jpg",
@@ -36,7 +36,7 @@ const router = express.Router();
 //     productId: "82019",
 //     brandName: "LEVIS",
 //     productName: "Slim Fit Checked Shirt",
-//     categoryId: "678903d96080288c4dcc1b4e", // Checked Shirt
+//     categoryId: "0002", // Checked Shirt
 //     price: 1599,
 //     images: [
 //       "https://assets.myntassets.com/h_1440,q_90,w_1080/v1/assets/images/13170746/2021/1/5/52848358-0cbd-44e4-9749-88e9fc8c5ea71609828325310-Levis-Men-Shirts-8831609828323812-1.jpg",
@@ -52,7 +52,7 @@ const router = express.Router();
 //     productId: "111354",
 //     brandName: "LEVIS",
 //     productName: "Regular Fit Linen Solid Shirt",
-//     categoryId: "678903d96080288c4dcc1b4f", // Solid Shirt
+//     categoryId: "0003", // Solid Shirt
 //     price: 2639,
 //     images: [
 //       "https://assets.myntassets.com/h_1440,q_90,w_1080/v1/assets/images/12365690/2021/1/20/73a9a06b-4d24-4cd3-a958-10e4cceea44b1611122727200-Levis-Men-Shirts-3321611122725361-1.jpg",
@@ -68,7 +68,7 @@ const router = express.Router();
 //     productId: "723891",
 //     brandName: "ROADSTER",
 //     productName: "Checked Casual Shirt",
-//     categoryId: "678903d96080288c4dcc1b4e", // Checked Shirt
+//     categoryId: "0002", // Checked Shirt
 //     price: 879,
 //     images: [
 //       "https://assets.myntassets.com/h_1440,q_90,w_1080/v1/assets/images/6849350/2019/2/4/637626cc-565d-4322-98ed-2674cfa4a4281549278244906-Roadster-Men-Blue-Regular-Fit-Checked-Casual-Shirt-378154927-1.jpg",
@@ -85,7 +85,7 @@ const router = express.Router();
 //     productId: "412562",
 //     brandName: "ROADSTER",
 //     productName: "Checked Casual Shirt",
-//     categoryId: "678903d96080288c4dcc1b4e", // Checked Shirt
+//     categoryId: "0002", // Checked Shirt
 //     price: 909,
 //     images: [
 //       "https://assets.myntassets.com/h_1440,q_90,w_1080/v1/assets/images/12947450/2021/1/27/3a52d6b9-04c1-4188-9ddb-473484a365081611724552932-Roadster-Men-Shirts-4521611724551117-1.jpg",
@@ -101,7 +101,7 @@ const router = express.Router();
 //     productId: "156780",
 //     brandName: "JACK & JONES",
 //     productName: "Checked Casual Shirt",
-//     categoryId: "678903d96080288c4dcc1b4e", // Checked Shirt
+//     categoryId: "0002", // Checked Shirt
 //     price: 1499,
 //     images: [
 //       "https://assets.myntassets.com/h_1440,q_90,w_1080/v1/assets/images/11207384/2020/3/18/905a59cc-6bb9-4edb-9d94-4497840612da1584524005223-Jack--Jones-Men-Shirts-7541584524003798-1.jpg",
@@ -117,7 +117,7 @@ const router = express.Router();
 //     productId: "121329",
 //     brandName: "MAST & HARBOUR",
 //     productName: "Checked Casual Shirt",
-//     categoryId: "678903d96080288c4dcc1b4e", // Checked Shirt
+//     categoryId: "0002", // Checked Shirt
 //     price: 1099,
 //     images: [
 //       "https://assets.myntassets.com/h_1440,q_90,w_1080/v1/assets/images/2042528/2017/9/28/11506599316866-Mast--Harbour-Men-Red--Blue-Regular-Fit-Checked-Casual-Shirt-7991506599316924-1.jpg",
@@ -133,7 +133,7 @@ const router = express.Router();
 //     productId: "157167",
 //     brandName: "HERE & NOW",
 //     productName: "Regular Fit Solid Casual Shirt",
-//     categoryId: "678903d96080288c4dcc1b4f", // Solid Shirt
+//     categoryId: "0003", // Solid Shirt
 //     price: 599,
 //     images: [
 //       "https://assets.myntassets.com/h_1440,q_90,w_1080/v1/assets/images/7425041/2020/1/17/7061d858-c913-449a-9e46-6a67694379961579260299274-HERENOW-Men-Mustard-Regular-Fit-Solid-Casual-Shirt-102157926-1.jpg",
@@ -149,7 +149,7 @@ const router = express.Router();
 //     productId: "180820",
 //     brandName: "WROGN",
 //     productName: "Slim Fit Solid Casual Shirt",
-//     categoryId: "678903d96080288c4dcc1b4f", // Solid Shirt
+//     categoryId: "0003", // Solid Shirt
 //     price: 1259,
 //     images: [
 //       "https://assets.myntassets.com/h_1440,q_90,w_1080/v1/assets/images/1758578/2017/5/12/11494569522819-WROGN-Men-Shirts-8521494569522516-1.jpg",
@@ -165,7 +165,7 @@ const router = express.Router();
 //     productId: "108974",
 //     brandName: "HANCOCK",
 //     productName: "Regular Fit Floral Shirt",
-//     categoryId: "678903d96080288c4dcc1b50", // Floral Shirt
+//     categoryId: "0004", // Floral Shirt
 //     price: 1379,
 //     images: [
 //       "https://assets.myntassets.com/h_1440,q_90,w_1080/v1/assets/images/13320818/2021/1/8/623cd387-b2b7-45c0-a539-fb50fe44c2751610105263406-Hancock-Men-Shirts-9181610105261837-1.jpg",
@@ -181,7 +181,7 @@ const router = express.Router();
 //     productId: "789042",
 //     brandName: "HIGHLANDER",
 //     productName: "Slim Fit Printed Casual Shirt",
-//     categoryId: "678903d96080288c4dcc1b4d", // Printed Shirt
+//     categoryId: "0001", // Printed Shirt
 //     price: 576,
 //     images: [
 //       "https://assets.myntassets.com/h_1440,q_90,w_1080/v1/assets/images/11780944/2020/4/3/1ee22980-624d-4822-8a7b-1934c2ade5ba1585905005496HIGHLANDERMenBlackWhiteSlimFitPrintedCasualShirt1.jpg",
@@ -197,7 +197,7 @@ const router = express.Router();
 //     productId: "510983",
 //     brandName: "MAST & HARBOUR",
 //     productName: "Slim Fit Solid Casual Shirt",
-//     categoryId: "678903d96080288c4dcc1b4f", // Solid Shirt
+//     categoryId: "0003", // Solid Shirt
 //     price: 854,
 //     images: [
 //       "https://assets.myntassets.com/h_1440,q_90,w_1080/v1/assets/images/2389862/2018/4/19/11524137287746-Mast--Harbour-Men-Pink-Regular-Fit-Solid-Casual-Shirt-1991524137287562-1.jpg",
@@ -213,7 +213,7 @@ const router = express.Router();
 //     productId: "567845",
 //     brandName: "GINI & JONY",
 //     productName: "Regular Fit Checked Shirt",
-//     categoryId: "678903d96080288c4dcc1b4e", // Checked Shirt
+//     categoryId: "0002", // Checked Shirt
 //     price: 1049,
 //     images: [
 //       "https://assets.myntassets.com/h_1440,q_90,w_1080/v1/assets/images/11083618/2021/2/12/495ec6d7-4e48-4c67-9c2c-d109b67b573e1613121119602-Gini-and-Jony-Girls-Maroon--White-Regular-Fit-Checked-Casual-1.jpg",
@@ -229,7 +229,7 @@ const router = express.Router();
 //     productId: "667788",
 //     brandName: "PEPE JEANS",
 //     productName: "Regular Fit Printed Casual Shirt",
-//     categoryId: "678903d96080288c4dcc1b4d", // Printed Shirt
+//     categoryId: "0001", // Printed Shirt
 //     price: 549,
 //     images: [
 //       "https://assets.myntassets.com/h_1440,q_90,w_1080/v1/assets/images/11271624/2021/1/28/ed23bd79-40c6-467e-b516-316242d7fcde1611833536029PepeJeansGirlsLimeGreenRegularFitPrintedCasualShirt1.jpg",
@@ -245,10 +245,10 @@ const router = express.Router();
 //     productId: "990077",
 //     brandName: "GAP",
 //     productName: "Faded Denim Casual Shirt",
-//     categoryId: "678903d96080288c4dcc1b51", // Denim Shirt
+//     categoryId: "0005", // Denim Shirt
 //     price: 1839,
 //     images: [
-//       "https://assets.myntassets.com/h_1440,q_90,w_1080/v1/assets/images/12810666/2021/2/8/87562077-aebf-4108-970e-937ba6879f771612786593723-GAP -Girls-Blue-Regular-Fit-Faded-Denim-Cotton-Casual-Shirt-1-1.jpg",
+//       "https://assets.myntassets.com/h_1440,q_90,w_1080/v1/assets/images/12810666/2021/2/8/87562077-aebf-4108-970e-937ba6879f771612786593723-GAP-Girls-Blue-Regular-Fit-Faded-Denim-Cotton-Casual-Shirt-1-1.jpg",
 //       "https://assets.myntassets.com/h_1440,q_90,w_1080/v1/assets/images/12810666/2021/2/8/db1b28e0-39ce-4272-ab85-b23639dac6ca1612786593700-GAP-Girls-Blue-Regular-Fit-Faded-Denim-Cotton-Casual-Shirt-1-2.jpg",
 //       "https://assets.myntassets.com/h_1440,q_90,w_1080/v1/assets/images/12810666/2021/2/8/b0a2876e-11e9-4dce-b44e-ca4140ee775c1612786593681-GAP-Girls-Blue-Regular-Fit-Faded-Denim-Cotton-Casual-Shirt-1-3.jpg",
 //       "https://assets.myntassets.com/h_1440,q_90,w_1080/v1/assets/images/12810666/2021/2/8/c04e6bcd-7ced-4249-aa34-6e2c986c21a71612786593662-GAP-Girls-Blue-Regular-Fit-Faded-Denim-Cotton-Casual-Shirt-1-4.jpg",
@@ -261,7 +261,7 @@ const router = express.Router();
 //     productId: "445599",
 //     brandName: "H & M",
 //     productName: "FaOversized Cotton Shirt",
-//     categoryId: "678903d96080288c4dcc1b52", // Cotton Shirt
+//     categoryId: "0006", // Cotton Shirt
 //     price: 1299,
 //     images: [
 //       "https://assets.myntassets.com/h_1440,q_90,w_1080/v1/assets/images/productimage/2021/2/17/804706d7-bf6d-42de-9eff-0faf4a67f10d1613577678101-1.jpg",
@@ -274,7 +274,7 @@ const router = express.Router();
 //     productId: "301095",
 //     brandName: "PEPE JEANS",
 //     productName: "Regular Fit Solid Denim Shirt",
-//     categoryId: "678903d96080288c4dcc1b51", // Denim Shirt
+//     categoryId: "0005", // Denim Shirt
 //     price: 959,
 //     images: [
 //       "https://assets.myntassets.com/h_1440,q_90,w_1080/v1/assets/images/11271594/2021/1/28/5131ba41-11e2-4344-bc7b-31258f96af721611833535290PepeJeansGirlsBlueRegularFitSolidCasualDenimShirt1.jpg",
@@ -289,7 +289,7 @@ const router = express.Router();
 //     productId: "4001",
 //     brandName: "PANNKH",
 //     productName: "Navy Blue Printed Top",
-//     categoryId: "678903d96080288c4dcc1b53", // Printed Top
+//     categoryId: "0007", // Printed Top
 //     price: 549,
 //     images: [
 //       "https://assets.myntassets.com/h_1440,q_90,w_1080/v1/assets/images/2506738/2018/7/18/df0c1d8c-528d-4afd-9714-a40c19b105ec1531903512284-Pannkh-Women-Navy-Blue-Printed-Top-6761531903512079-1.jpg",
@@ -305,7 +305,7 @@ const router = express.Router();
 //     productId: "4002",
 //     brandName: "SASSAFRAS",
 //     productName: "White Solid High-Neck Top",
-//     categoryId: "678903d96080288c4dcc1b54", // Solid Top
+//     categoryId: "0009", // Solid Top
 //     price: 649,
 //     images: [
 //       "https://assets.myntassets.com/h_1440,q_90,w_1080/v1/assets/images/12221944/2020/8/14/b9fc8ee9-ec92-4557-ab60-000e3779291e1597404329638-SASSAFRAS-Women-White-Solid-Top-8171597404327851-1.jpg",
@@ -314,14 +314,14 @@ const router = express.Router();
 //       "https://assets.myntassets.com/h_1440,q_90,w_1080/v1/assets/images/12221944/2020/8/14/9d5d7879-7a80-4b2b-b6e2-a4268fc3897f1597404329466-SASSAFRAS-Women-White-Solid-Top-8171597404327851-4.jpg",
 //       "https://assets.myntassets.com/h_1440,q_90,w_1080/v1/assets/images/12221944/2020/8/14/bef9b948-8555-40bc-b280-d85b8c06fdc21597404329403-SASSAFRAS-Women-White-Solid-Top-8171597404327851-5.jpg",
 //     ],
-//     rating : 3.7,
+//     rating: 3.7,
 //     gender: "FEMALE",
 //   },
 //   {
 //     productId: "4003",
 //     brandName: "KASSUALLY",
 //     productName: "Black Solid Peplum Top",
-//     categoryId: "678903d96080288c4dcc1b54", // Solid Top
+//     categoryId: "0009", // Solid Top
 //     price: 597,
 //     images: [
 //       "https://assets.myntassets.com/h_1440,q_90,w_1080/v1/assets/images/productimage/2020/6/9/aae6d5da-cee2-4fdf-99cd-b5421d86d68a1591654989641-1.jpg",
@@ -338,7 +338,7 @@ const router = express.Router();
 //     productId: "4004",
 //     brandName: "HARPA",
 //     productName: "Peach Solid Empire Top",
-//     categoryId: "678903d96080288c4dcc1b54", // Solid Top
+//     categoryId: "0009", // Solid Top
 //     price: 584,
 //     images: [
 //       "https://assets.myntassets.com/h_1440,q_90,w_1080/v1/assets/images/productimage/2020/10/6/49df934c-237e-4681-97f9-21338fae580c1601936086956-1.jpg",
@@ -355,9 +355,9 @@ const router = express.Router();
 //     productId: "4005",
 //     brandName: "HERE&NOW",
 //     productName: "Women Printed Shirt Top",
-//     categoryId: "678903d96080288c4dcc1b53", // Printed Top
+//     categoryId: "0007", // Printed Top
 //     price: 599,
-//  images: [
+//     images: [
 //       "https://assets.myntassets.com/h_1440,q_90,w_1080/v1/assets/images/3084520/2018/4/13/11523621193965-HERENOW-Women-Tops-111523621193851-1.jpg",
 //       "https://assets.myntassets.com/h_1440,q_90,w_1080/v1/assets/images/3084520/2018/4/13/11523621193950-HERENOW-Women-Tops-111523621193851-2.jpg",
 //       "https://assets.myntassets.com/h_1440,q_90,w_1080/v1/assets/images/3084520/2018/4/13/11523621193938-HERENOW-Women-Tops-111523621193851-3.jpg",
@@ -370,7 +370,7 @@ const router = express.Router();
 //     productId: "4006",
 //     brandName: "WOOWZERZ",
 //     productName: "Women Burgundy Solid Top",
-//     categoryId: "678903d96080288c4dcc1b54", // Solid Top
+//     categoryId: "0009", // Solid Top
 //     price: 957,
 //     images: [
 //       "https://assets.myntassets.com/h_1440,q_90,w_1080/v1/assets/images/12052802/2020/8/7/4c9a1dd2-9be4-4223-b450-087c461f68f91596801825132-WoowZerz-Women-Burgundy-Solid-Peplum-Top-6311596801823505-1.jpg",
@@ -388,7 +388,7 @@ const router = express.Router();
 //     productId: "4007",
 //     brandName: "H&M",
 //     productName: "Women Black Striped Top",
-//     categoryId: "678903d96080288c4dcc1b54", // Solid Top
+//     categoryId: "0009", // Solid Top
 //     price: 1234,
 //     images: [
 //       "https://assets.myntassets.com/h_1440,q_90,w_1080/v1/assets/images/productimage/2021/1/15/cf97a00d-b7d8-4e43-af44-ba48620ec7061610698005949-1.jpg",
@@ -403,7 +403,7 @@ const router = express.Router();
 //     productId: "4008",
 //     brandName: "MANGO",
 //     productName: "Teal Blue Solid Top",
-//     categoryId: "678903d96080288c4dcc1b54", // Solid Top
+//     categoryId: "0009", // Solid Top
 //     price: 4131,
 //     images: [
 //       "https://assets.myntassets.com/h_1440,q_90,w_1080/v1/assets/images/13344610/2021/1/21/b97763f3-71bd-4cd0-b5c4-1b571dc230151611229133037-MANGO-Women-Teal-Blue-Solid-Top-With-Satin-Finish-4631611229-1.jpg",
@@ -418,7 +418,7 @@ const router = express.Router();
 //     productId: "4009",
 //     brandName: "FOREVER NEW",
 //     productName: "Women White Floral Top",
-//     categoryId: "678903d96080288c4dcc1b50", // Floral Top
+//     categoryId: "0010", // Floral Top
 //     price: 4080,
 //     images: [
 //       "https://assets.myntassets.com/h_1440,q_90,w_1080/v1/assets/images/productimage/2021/2/10/89b85d31-7cb8-4240-bdea-73fbc39fbd071612960055361-1.jpg",
@@ -433,7 +433,7 @@ const router = express.Router();
 //     productId: "4010",
 //     brandName: "MANGO",
 //     productName: "Women Dusty Pink Top",
-//     categoryId: "678903d96080288c4dcc1b51", // Denim Shirt
+//     categoryId: "0005", // Denim Shirt
 //     price: 4131,
 //     images: [
 //       "https://assets.myntassets.com/h_1440,q_90,w_1080/v1/assets/images/13344980/2021/1/21/ea56a063-b1cb-425a-a33a-71b6b942e9fc1611220605290-MANGO-Women-Dusty-Pink--Golden-Self-Design-Semi-Sheer-Tie-up-1.jpg",
@@ -448,7 +448,7 @@ const router = express.Router();
 //     productId: "5001",
 //     brandName: "Kids Clan",
 //     productName: "Regular Fit Solid Shirt",
-//     categoryId: "678903d96080288c4dcc1b4f", // Solid Shirt
+//     categoryId: "0003", // Solid Shirt
 //     price: 489,
 //     images: [
 //       "https://assets.myntassets.com/h_1440,q_90,w_1080/v1/assets/images/8744065/2019/2/25/63ece92d-a54c-4d62-8a8b-f99b196c4cff1551090533837-Kids-Clan-Boys-Shirts-3861551090533549-1.jpg",
@@ -462,7 +462,7 @@ const router = express.Router();
 //     productId: "5002",
 //     brandName: "max",
 //     productName: "Regular Fit Printed Shirt",
-//     categoryId: "678903d96080288c4dcc1b4d", // Printed Shirt
+//     categoryId: "0001", // Printed Shirt
 //     price: 499,
 //     images: [
 //       "https://assets.myntassets.com/h_1440,q_90,w_1080/v1/assets/images/productimage/2021/2/9/f5dec3ca-5b26-4a04-8130-ee115cdc1fc61612857822599-1.jpg",
@@ -477,7 +477,7 @@ const router = express.Router();
 //     productId: "5003",
 //     brandName: "Cherokee",
 //     productName: "Regular Printed Casual Shirt",
-//     categoryId: "678903d96080288c4dcc1b4d", // Printed Shirt
+//     categoryId: "0001", // Printed Shirt
 //     price: 449,
 //     images: [
 //       "https://assets.myntassets.com/h_1440,q_90,w_1080/v1/assets/images/productimage/2021/2/1/cf3d4271-222b-4410-ab48-4ea9af0e80e81612182366650-1.jpg",
@@ -491,7 +491,7 @@ const router = express.Router();
 //     productId: "5004",
 //     brandName: "URBAN SCOTTISH",
 //     productName: "Regular Fit Printed Casual Shirt",
-//     categoryId: "678903d96080288c4dcc1b4d", // Printed Shirt
+//     categoryId: "0001", // Printed Shirt
 //     price: 799,
 //     images: [
 //       "https://assets.myntassets.com/h_1440,q_90,w_1080/v1/assets/images/productimage/2020/11/7/1b2c3536-5412-4eee-9487-34dbfcfd506c1604742045020-1.jpg",
@@ -505,7 +505,7 @@ const router = express.Router();
 //     productId: "5005",
 //     brandName: "Indian Terrain",
 //     productName: "Regular Fit Pure Cotton Solid Shirt",
-//     categoryId: "678903d96080288c4dcc1b52", // Cotton Shirt
+//     categoryId: "0006", // Cotton Shirt
 //     price: 719,
 //     images: [
 //       "https://assets.myntassets.com/h_1440,q_90,w_1080/v1/assets/images/13360366/2021/2/8/e143a2b0-9cc4-4cc1-8765-0c5b63e12ba61612760736412-Indian-Terrain-Boys-Green-Regular-Fit-Pure-Cotton-Solid-Casu-1.jpg",
@@ -527,9 +527,10 @@ async function createProducts(products) {
       throw new TypeError("Expected products to be an array");
     }
 
+    // No need to convert categoryId to ObjectId if they are strings
     const updatedProducts = products.map((product) => {
-      // Assuming product.categoryId is already a valid ObjectId
-      product.categoryId = new mongoose.Types.ObjectId(product.categoryId);
+      // Ensure categoryId is a string
+      product.categoryId = product.categoryId.toString();
       return product;
     });
 
