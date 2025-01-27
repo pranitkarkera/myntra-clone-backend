@@ -2,52 +2,52 @@ const express = require('express')
 const Category = require('../models/categories.models')
 const router = express.Router()
 
-const newCategories = [
-  {
-    categoryId: "678903d96080288c4dcc1b4d", // Printed Shirt
-    categoryName: "Printed Shirt",
-  },
-  {
-    categoryId: "678903d96080288c4dcc1b4e", // Checked Shirt
-    categoryName: "Checked Shirt",
-  },
-  {
-    categoryId: "678903d96080288c4dcc1b4f", // Solid Shirt
-    categoryName: "Solid Shirt",
-  },
-  {
-    categoryId: "678903d96080288c4dcc1b50", // Floral Shirt
-    categoryName: "Floral Shirt",
-  },
-  {
-    categoryId: "678903d96080288c4dcc1b51", // Denim Shirt
-    categoryName: "Denim Shirt",
-  },
-  {
-    categoryId: "678903d96080288c4dcc1b52", // Cotton Shirt
-    categoryName: "Cotton Shirt",
-  },
-  {
-    categoryId: "678903d96080288c4dcc1b53", // Printed Top
-    categoryName: "Printed Top",
-  },
-  {
-    categoryId: "678903d96080288c4dcc1b54", // Striped Top
-    categoryName: "Striped Top",
-  },
-  {
-    categoryId: "678903d96080288c4dcc1b55", // Solid Top
-    categoryName: "Solid Top",
-  },
-  {
-    categoryId: "678903d96080288c4dcc1b56", // Floral Top
-    categoryName: "Floral Top",
-  },
-  {
-    categoryId: "678903d96080288c4dcc1b57", // Dusty Top
-    categoryName: "Dusty Top",
-  },
-];
+// const newCategories = [
+//   {
+//     categoryId: "678903d96080288c4dcc1b4d", // Printed Shirt
+//     categoryName: "Printed Shirt",
+//   },
+//   {
+//     categoryId: "678903d96080288c4dcc1b4e", // Checked Shirt
+//     categoryName: "Checked Shirt",
+//   },
+//   {
+//     categoryId: "678903d96080288c4dcc1b4f", // Solid Shirt
+//     categoryName: "Solid Shirt",
+//   },
+//   {
+//     categoryId: "678903d96080288c4dcc1b50", // Floral Shirt
+//     categoryName: "Floral Shirt",
+//   },
+//   {
+//     categoryId: "678903d96080288c4dcc1b51", // Denim Shirt
+//     categoryName: "Denim Shirt",
+//   },
+//   {
+//     categoryId: "678903d96080288c4dcc1b52", // Cotton Shirt
+//     categoryName: "Cotton Shirt",
+//   },
+//   {
+//     categoryId: "678903d96080288c4dcc1b53", // Printed Top
+//     categoryName: "Printed Top",
+//   },
+//   {
+//     categoryId: "678903d96080288c4dcc1b54", // Striped Top
+//     categoryName: "Striped Top",
+//   },
+//   {
+//     categoryId: "678903d96080288c4dcc1b55", // Solid Top
+//     categoryName: "Solid Top",
+//   },
+//   {
+//     categoryId: "678903d96080288c4dcc1b56", // Floral Top
+//     categoryName: "Floral Top",
+//   },
+//   {
+//     categoryId: "678903d96080288c4dcc1b57", // Dusty Top
+//     categoryName: "Dusty Top",
+//   },
+// ];
 
 // post categories in th database
 
@@ -119,6 +119,6 @@ router.get('/:categoryId', async (req, res) => {
     }
 })
 
-createCategory(newCategories);
+// createCategory(newCategories);
 
 module.exports = router
