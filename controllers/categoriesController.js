@@ -1,6 +1,4 @@
-const express = require("express");
 const Category = require("../models/categories.models");
-const router = express.Router();
 
 // const newCategories = [
 //   {
@@ -60,8 +58,7 @@ async function createCategory(categories) {
   }
 }
 
-// Route to create categories
-router.post("/", async (req, res) => {
+exports.createCategory = async (req, res) => {
   try {
     console.log(req.body);
     const savedCategories = await createCategory(req.body);
@@ -71,9 +68,9 @@ router.post("/", async (req, res) => {
       .status(500)
       .json({ error: error.message || "Failed to create a category" });
   }
-});
+}
 
-// Get categories from the database
+
 async function readAllCategories() {
   try {
     const allCategories = await Category.find();
@@ -83,8 +80,7 @@ async function readAllCategories() {
   }
 }
 
-// Route to get all categories
-router.get("/", async (req, res) => {
+exports.getCategories=async (req, res) => {
   try {
     const categories = await readAllCategories();
     if (categories.length !== 0) {
@@ -97,9 +93,8 @@ router.get("/", async (req, res) => {
       .status(500)
       .json({ error: error.message || "Failed to fetch categories" });
   }
-});
+}
 
-// Get category by ID
 async function getCategoryById(categoryId) {
   try {
     const categoryById = await Category.findOne({ categoryId });
@@ -109,8 +104,7 @@ async function getCategoryById(categoryId) {
   }
 }
 
-// Route to get a category by ID
-router.get("/:categoryId", async (req, res) => {
+exports.getByCategoryId = async (req, res) => {
   try {
     const category = await getCategoryById(req.params.categoryId);
     if (category) {
@@ -123,8 +117,6 @@ router.get("/:categoryId", async (req, res) => {
       .status(500)
       .json({ error: error.message || "Failed to fetch category by ID" });
   }
-});
+}
 
 // createCategory(newCategories);
-
-module.exports = router;
