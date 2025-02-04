@@ -1,11 +1,10 @@
-const mongoose = require("mongoose");
+// const mongoose = require("mongoose");
 const Address = require("../models/address.models");
 
 // Add a new address
 exports.addAddress = async (req, res) => {
   try {
     const {
-      userId,
       name,
       number,
       street,
@@ -14,12 +13,11 @@ exports.addAddress = async (req, res) => {
       zipCode,
       country,
       addressType,
-      default: isDefault,
+      defaultAddress: isDefault,
     } = req.body;
 
     // Validate required fields
     if (
-      !userId ||
       !name ||
       !number ||
       !street ||
@@ -33,7 +31,6 @@ exports.addAddress = async (req, res) => {
     }
 
     const address = new Address({
-      userId,
       name,
       number,
       street,
@@ -42,7 +39,7 @@ exports.addAddress = async (req, res) => {
       zipCode,
       country,
       addressType,
-      default: isDefault || false, // Default to false if not provided
+      defaultAddress: isDefault || false, // Default to false if not provided
     });
 
     await address.save();
@@ -52,18 +49,22 @@ exports.addAddress = async (req, res) => {
   }
 };
 
-//Get address by user id
+// Get all addresses
+exports.getAllAddresses = async (req, res) => {
+  try {
+    const addresses = await Address.find(); // Fetch all addresses from the database
+    res.status(200).json(addresses); // Return the addresses in the response
+  } catch (error) {
+    res.status(500).json({ error: error.message }); // Handle any errors
+  }
+};
 
+// Get address by user id
 exports.getAddressesByUser = async (req, res) => {
   try {
-    const { userId } = req.params;
+    const { number } = req.params;
 
-    // Validate userId
-    if (!mongoose.Types.ObjectId.isValid(userId)) {
-      return res.status(400).json({ message: "Invalid user ID" });
-    }
-
-    const addresses = await Address.find({ userId });
+    const addresses = await Address.find({ number });
     res.status(200).json(addresses);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -73,36 +74,29 @@ exports.getAddressesByUser = async (req, res) => {
 // Update an address
 exports.updateAddress = async (req, res) => {
   try {
-    const { addressId } = req.params;
+    const { number } = req.params;
     const {
       name,
-      number,
       street,
       city,
       state,
       zipCode,
       country,
       addressType,
-      default: isDefault,
+      defaultAddress: isDefault,
     } = req.body;
 
-    // Validate addressId
-    if (!mongoose.Types.ObjectId.isValid(addressId)) {
-      return res.status(400).json({ message: "Invalid address ID" });
-    }
-
-    const address = await Address.findByIdAndUpdate(
-      addressId,
+    const address = await Address.findOneAndUpdate(
+      { number },
       {
         name,
-        number,
         street,
         city,
         state,
         zipCode,
         country,
         addressType,
-        default: isDefault,
+        defaultAddress: isDefault,
       },
       { new: true }
     );
@@ -120,14 +114,9 @@ exports.updateAddress = async (req, res) => {
 // Delete an address
 exports.deleteAddress = async (req, res) => {
   try {
-    const { addressId } = req.params;
+    const { number } = req.params;
 
-    // Validate addressId
-    if (!mongoose.Types.ObjectId.isValid(addressId)) {
-      return res.status(400).json({ message: "Invalid address ID" });
-    }
-
-    const address = await Address.findByIdAndDelete(addressId);
+    const address = await Address.findOneAndDelete({ number });
 
     if (!address) {
       return res.status(404).json({ message: "Address not found" });

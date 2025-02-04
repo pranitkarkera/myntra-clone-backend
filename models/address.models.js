@@ -2,11 +2,11 @@ const mongoose = require("mongoose");
 
 const addressSchema = new mongoose.Schema(
   {
-    userId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      required: true,
-    },
+    // userId: {
+    //   type: mongoose.Schema.Types.ObjectId,
+    //   ref: "User",
+    //   required: true,
+    // },
     name: { type: String, required: true },
     number: { type: Number, required: true },
     street: { type: String, required: true },
@@ -19,7 +19,7 @@ const addressSchema = new mongoose.Schema(
       required: true,
       enum: ["Home", "Work"],
     },
-    default: {type: Boolean}
+    defaultAddress: {type: Boolean}
   },
   { timestamps: true }
 );

@@ -9,4 +9,5 @@ router.get("/:email", userController.getUser);
 router.put("/:email", userController.updateUser);
 router.delete("/:email", userController.deleteUser);
 
+
 module.exports = router;

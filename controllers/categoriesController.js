@@ -68,8 +68,7 @@ exports.createCategory = async (req, res) => {
       .status(500)
       .json({ error: error.message || "Failed to create a category" });
   }
-}
-
+};
 
 async function readAllCategories() {
   try {
@@ -80,7 +79,7 @@ async function readAllCategories() {
   }
 }
 
-exports.getCategories=async (req, res) => {
+exports.getCategories = async (req, res) => {
   try {
     const categories = await readAllCategories();
     if (categories.length !== 0) {
@@ -93,7 +92,7 @@ exports.getCategories=async (req, res) => {
       .status(500)
       .json({ error: error.message || "Failed to fetch categories" });
   }
-}
+};
 
 async function getCategoryById(categoryId) {
   try {
@@ -117,6 +116,6 @@ exports.getByCategoryId = async (req, res) => {
       .status(500)
       .json({ error: error.message || "Failed to fetch category by ID" });
   }
-}
+};
 
 // createCategory(newCategories);
