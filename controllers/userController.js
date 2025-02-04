@@ -37,14 +37,14 @@ exports.login = async (req, res) => {
 // Get user by ID
 exports.getUser = async (req, res) => {
   try {
-    const userId = req.params.userId;
+    const email = req.params.userId;
 
     // Check if userId is a valid ObjectId
-    if (!mongoose.Types.ObjectId.isValid(userId)) {
-      return res.status(400).json({ error: "Invalid user ID" });
+    if (!mongoose.Types.ObjectId.isValid(email)) {
+      return res.status(400).json({ error: "Invalid email id" });
     }
 
-    const user = await User.findById(userId);
+    const user = await User.findById(email);
     if (!user) return res.status(404).json({ message: "User not found" });
     res.status(200).json(user);
   } catch (error) {
@@ -56,14 +56,14 @@ exports.getUser = async (req, res) => {
 exports.deleteUser = async (req, res) => {
   console.log("Delete User endpoint called");
   try {
-    const userId = req.params.userId;
+    const email = req.params.email;
 
     // Delete the user
-    const user = await User.findByIdAndDelete(userId);
+    const user = await User.findByIdAndDelete(email);
     if (!user) return res.status(404).json({ message: "User not found" });
 
     // Delete all addresses associated with the user (cascading delete)
-    await Address.deleteMany({ userId });
+    await Address.deleteMany({ email });
 
     res
       .status(200)
