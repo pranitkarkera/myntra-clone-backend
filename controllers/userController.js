@@ -52,6 +52,25 @@ exports.getUser = async (req, res) => {
   }
 };
 
+// Update user by email
+exports.updateUser  = async (req, res) => {
+  try {
+    const { name, username } = req.body;
+    const email = req.params.email;
+
+    const user = await User.findOneAndUpdate(
+      { email },
+      { name, username },
+      { new: true } // Return the updated user
+    );
+
+    if (!user) return res.status(404).json({ message: "User  not found" });
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
 // Delete a user and their associated addresses
 exports.deleteUser = async (req, res) => {
   console.log("Delete User endpoint called");
