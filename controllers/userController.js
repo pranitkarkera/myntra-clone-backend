@@ -1,3 +1,4 @@
+const mongoose = require("mongoose");
 const User = require("../models/users.models");
 const Address = require("../models/address.models");
 const bcrypt = require("bcryptjs"); // Ensure bcryptjs is installed
@@ -53,7 +54,7 @@ exports.getUser = async (req, res) => {
 
 // Delete a user and their associated addresses
 exports.deleteUser = async (req, res) => {
-    console.log("Delete User endpoint called");
+  console.log("Delete User endpoint called");
   try {
     const userId = req.params.userId;
 
