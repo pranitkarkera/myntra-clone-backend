@@ -3,13 +3,14 @@ const Address = require("../models/address.models");
 const bcrypt = require("bcryptjs"); // Ensure bcryptjs is installed
 
 // Register a new user
+
 exports.register = async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password, username } = req.body; // Include username
     const hashedPassword = await bcrypt.hash(password, 10);
-    const user = new User({ name, email, password: hashedPassword });
+    const user = new User({ name, email, password: hashedPassword, username }); // Include username
     await user.save();
-    res.status(201).json({ message: "User registered successfully", user });
+    res.status(201).json({ message: "User  registered successfully", user });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
