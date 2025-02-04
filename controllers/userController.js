@@ -37,10 +37,10 @@ exports.login = async (req, res) => {
 // Get user by ID
 exports.getUser = async (req, res) => {
   try {
-    const email = req.params.userId;
+    const email = req.params.email;
 
     // Check if userId is a valid ObjectId
-    if (!mongoose.Types.ObjectId.isValid(email)) {
+    if (!email) {
       return res.status(400).json({ error: "Invalid email id" });
     }
 
