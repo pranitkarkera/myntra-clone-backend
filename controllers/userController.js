@@ -44,7 +44,7 @@ exports.getUser = async (req, res) => {
       return res.status(400).json({ error: "Invalid email id" });
     }
 
-    const user = await User.findByOne({email});
+    const user = await User.findOne({email});
     if (!user) return res.status(404).json({ message: "User not found" });
     res.status(200).json(user);
   } catch (error) {
@@ -59,7 +59,7 @@ exports.deleteUser = async (req, res) => {
     const email = req.params.email;
 
     // Delete the user
-    const user = await User.findByOneAndDelete({email});
+    const user = await User.findOneAndDelete({email});
     if (!user) return res.status(404).json({ message: "User not found" });
 
     // Delete all addresses associated with the user (cascading delete)
