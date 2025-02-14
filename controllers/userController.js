@@ -87,6 +87,9 @@ exports.login = async (req, res) => {
       { expiresIn: "1h" }
     );
 
+    // Store user ID in local storage
+    localStorage.setItem("userId", user._id);
+
     res.status(200).json({
       message: "Login successful",
       user: {
