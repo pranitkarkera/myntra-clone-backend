@@ -3,10 +3,9 @@ const router = express.Router();
 const addressController = require("../controllers/addressController");
 
 // Address routes
-router.post("/add", addressController.addAddress);
-router.get("/alladdress", addressController.getAllAddresses);
-router.get("/:number", addressController.getAddressesByUser);
-router.put("/:number", addressController.updateAddress);
-router.delete("/:number", addressController.deleteAddress);
+router.post("/add/:userId", addressController.addAddress);
+router.get("/user/:userId", addressController.getAddresses);
+router.put("/:userId/:addressId", addressController.updateAddress);
+router.delete("/:userId/:addressId", addressController.removeAddress);
 
-module.exports = router;
+module.exports = router; // Ensure you are exporting the router

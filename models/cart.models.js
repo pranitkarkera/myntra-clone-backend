@@ -3,9 +3,9 @@ const mongoose = require("mongoose");
 const cartSchema = new mongoose.Schema(
   {
     userId: {
-      type: mongoose.Schema.Types.ObjectId,
-      required: true,
-      unique: true,
+      type: mongoose.Schema.Types.ObjectId, // Use ObjectId for registered users
+      required: true, // userId is now always required
+      ref: "User", // Reference to the User model
     },
     items: [
       {
@@ -15,8 +15,7 @@ const cartSchema = new mongoose.Schema(
         price: { type: Number, required: true },
         originalPrice: { type: Number, required: true },
         discountPercent: { type: Number, required: true, min: 0, max: 100 },
-        quantity: { type: Number, default: 1 },
-        addedAt: { type: Date, default: Date.now },
+        quantity: { type: Number, default: 1 }, // Default quantity is 1
       },
     ],
   },

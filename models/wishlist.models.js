@@ -3,9 +3,9 @@ const mongoose = require("mongoose");
 const wishlistSchema = new mongoose.Schema(
   {
     userId: {
-      type: mongoose.Schema.Types.ObjectId,
-      required: true,
-      unique: true,
+      type: mongoose.Schema.Types.ObjectId, // Use ObjectId for registered users
+      required: true, // Make userId optional
+      ref: "User", // Reference to the User model
     },
     items: [
       {
@@ -15,11 +15,11 @@ const wishlistSchema = new mongoose.Schema(
         price: { type: Number, required: true },
         originalPrice: { type: Number, required: true },
         discountPercent: { type: Number, required: true, min: 0, max: 100 },
-        addedAt: { type: Date, default: Date.now },
       },
     ],
   },
   { timestamps: true } // Automatically manage createdAt and updatedAt
 );
+
 
 module.exports = mongoose.model("Wishlist", wishlistSchema);
