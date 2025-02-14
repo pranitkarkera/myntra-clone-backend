@@ -1,6 +1,6 @@
 const express = require("express");
 const wishlistController = require("../controllers/wishlistController");
-const authMiddleware = require("../middleware/authMiddleware"); // Import the middleware
+const authMiddleware = require("../auth/authMiddlerware"); // Import the middleware
 
 const router = express.Router();
 

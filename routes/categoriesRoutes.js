@@ -1,6 +1,6 @@
 const express = require("express");
-const categoryController = require("../controllers/categories.controller");
-const authMiddleware = require("../middleware/authMiddleware"); // Import the middleware
+const categoryController = require("../controllers/categoriesController");
+const authMiddleware = require("../auth/authMiddlerware"); // Import the middleware
 
 const router = express.Router();
 

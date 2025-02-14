@@ -1,8 +1,6 @@
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
-const helmet = require("helmet");
-const rateLimit = require("express-rate-limit");
 const productRoutes = require("./routes/productsRoutes");
 const categoryRoutes = require("./routes/categoriesRoutes");
 const wishlistRoutes = require("./routes/wishlistRoutes");
@@ -15,21 +13,13 @@ const app = express();
 
 // CORS configuration
 const corsOptions = {
-  origin: ["http://localhost:3000", "https://myntra-puce-ten.vercel.app"], // Specify allowed origins
+  origin: "*", // Specify allowed origins
   credentials: true,
   optionsSuccessStatus: 200,
 };
 
 app.use(cors(corsOptions));
-app.use(helmet()); // Use Helmet for security
 app.use(express.json());
-
-// Rate limiting
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // Limit each IP to 100 requests per windowMs
-});
-app.use(limiter);
 
 // Test route
 app.get("/", (req, res) => {
