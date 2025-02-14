@@ -12,7 +12,60 @@ exports.login = async (req, res) => {
 
   // Check if the user is logging in as a guest
   if (email === "guest@gmail.com" && password === "guest123") {
-    // ... existing guest login logic
+    try {
+      // Create or retrieve the guest user
+      let guestUser = await User.findOne({ email: "guest@gmail.com" });
+
+      if (!guestUser) {
+        // Create a new guest user if it doesn't exist
+        guestUser = new User({
+          name: "Guest User",
+          email: "guest@gmail.com",
+          password: "guest123", // This will not be hashed since it's a guest login
+          isRegistered: false,
+        });
+        await guestUser.save();
+      }
+
+      // Create associated data if it doesn't exist
+      await Promise.all([
+        Cart.findOneAndUpdate(
+          { userId: guestUser._id },
+          { $setOnInsert: { items: [] } },
+          { upsert: true }
+        ),
+        Wishlist.findOneAndUpdate(
+          { userId: guestUser._id },
+          { $setOnInsert: { items: [] } },
+          { upsert: true }
+        ),
+        Address.findOneAndUpdate(
+          { userId: guestUser._id },
+          { $setOnInsert: { addressDetails: [] } },
+          { upsert: true }
+        ),
+      ]);
+
+      // Generate JWT for guest user
+      const token = jwt.sign(
+        { id: guestUser._id, email: guestUser.email },
+        process.env.JWT_SECRET,
+        { expiresIn: "1h" }
+      );
+
+      return res.status(200).json({
+        message: "Logged in as guest",
+        user: {
+          id: guestUser._id,
+          email: guestUser.email,
+          isRegistered: guestUser.isRegistered,
+        },
+        token, // Send the token back to the client
+      });
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ error: "Internal server error" });
+    }
   }
 
   // Normal login logic for registered users
@@ -49,7 +102,6 @@ exports.login = async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 };
-
 
 // Register a new user
 exports.register = async (req, res) => {
