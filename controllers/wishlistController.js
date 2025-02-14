@@ -1,5 +1,4 @@
 const Wishlist = require("../models/wishlist.models");
-const User = require("../models/users.models"); // Import the User model
 
 // Add item to wishlist
 exports.addItem = async (req, res) => {
@@ -11,14 +10,9 @@ exports.addItem = async (req, res) => {
     originalPrice,
     discountPercent,
   } = req.body; // Assuming these fields are sent in the request body
-  const userId = req.params.userId; // Get userId from the route parameters
+  const userId = req.userId; // Get userId from the JWT token
 
   try {
-    // Check if userId is provided
-    if (!userId) {
-      return res.status(400).json({ error: "User  ID must be provided." });
-    }
-
     // Find the wishlist by userId
     let wishlist = await Wishlist.findOne({ userId });
 
@@ -53,14 +47,9 @@ exports.addItem = async (req, res) => {
 
 // Get wishlist by userId
 exports.getWishlist = async (req, res) => {
-  const userId = req.params.userId; // Get userId from the route parameters
+  const userId = req.userId; // Get userId from the JWT token
 
   try {
-    // Check if userId is provided
-    if (!userId) {
-      return res.status(400).json({ error: "User  ID must be provided." });
-    }
-
     // Find the wishlist by userId
     const wishlist = await Wishlist.findOne({ userId });
 
@@ -77,14 +66,9 @@ exports.getWishlist = async (req, res) => {
 // Remove item from wishlist
 exports.removeItem = async (req, res) => {
   const { productId } = req.params; // Get productId from the route parameters
-  const userId = req.params.userId; // Get userId from the route parameters
+  const userId = req.userId; // Get userId from the JWT token
 
   try {
-    // Check if userId is provided
-    if (!userId) {
-      return res.status(400).json({ error: "User  ID must be provided." });
-    }
-
     // Find the wishlist by userId
     const wishlist = await Wishlist.findOne({ userId });
 
@@ -103,4 +87,3 @@ exports.removeItem = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
-

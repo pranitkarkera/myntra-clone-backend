@@ -1,11 +1,16 @@
 const express = require("express");
-const categoriesController = require("../controllers/categoriesController");
+const categoryController = require("../controllers/categories.controller");
+const authMiddleware = require("../middleware/authMiddleware"); // Import the middleware
+
 const router = express.Router();
 
-router.post("/", categoriesController.createCategory);
+// Create a new category (protected route)
+router.post("/", authMiddleware, categoryController.createCategory);
 
-router.get("/", categoriesController.getCategories);
+// Get all categories (protected route)
+router.get("/", authMiddleware, categoryController.getCategories);
 
-router.post("/:categoryId", categoriesController.getByCategoryId);
+// Get category by ID (protected route)
+router.get("/:categoryId", authMiddleware, categoryController.getByCategoryId);
 
 module.exports = router;

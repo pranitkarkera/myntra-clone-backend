@@ -1,5 +1,4 @@
 const Cart = require("../models/cart.models");
-const User = require("../models/users.models"); // Import the User model
 
 // Add item to cart
 exports.addItem = async (req, res) => {
@@ -12,7 +11,7 @@ exports.addItem = async (req, res) => {
     discountPercent,
     quantity,
   } = req.body; // Assuming you send these fields in the request body
-  const userId = req.params.userId; // Get userId from the route parameters
+  const userId = req.userId; // Get userId from the JWT token
 
   try {
     // Find or create the cart for the user
@@ -51,7 +50,7 @@ exports.addItem = async (req, res) => {
 // Remove item from cart
 exports.removeItem = async (req, res) => {
   const { productId } = req.params; // Get productId from the route parameters
-  const userId = req.params.userId; // Get userId from the route parameters
+  const userId = req.userId; // Get userId from the JWT token
 
   try {
     const cart = await Cart.findOne({ userId });
@@ -73,7 +72,7 @@ exports.removeItem = async (req, res) => {
 
 // Get cart for a user
 exports.getCart = async (req, res) => {
-  const userId = req.params.userId; // Get userId from the route parameters
+  const userId = req.userId; // Get userId from the JWT token
 
   try {
     const cart = await Cart.findOne({ userId });

@@ -1,15 +1,20 @@
 const express = require("express");
 const wishlistController = require("../controllers/wishlistController");
+const authMiddleware = require("../middleware/authMiddleware"); // Import the middleware
 
 const router = express.Router();
 
-// Get wishlist for a user or guest
-router.get("/:userId", wishlistController.getWishlist); // Get the wishlist for the logged-in user or guest
+// Get wishlist for a user
+router.get("/", authMiddleware, wishlistController.getWishlist); // No need for userId in params
 
 // Add item to wishlist
-router.post("/:userId/items", wishlistController.addItem); // Add item to the logged-in user's or guest's wishlist
+router.post("/items", authMiddleware, wishlistController.addItem); // No need for userId in params
 
 // Remove item from wishlist
-router.delete("/:userId/items/:productId", wishlistController.removeItem); // Remove a specific item from the logged-in user's or guest's wishlist
+router.delete(
+  "/items/:productId",
+  authMiddleware,
+  wishlistController.removeItem
+); // No need for userId in params
 
 module.exports = router;

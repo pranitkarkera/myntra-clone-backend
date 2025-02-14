@@ -2,7 +2,7 @@ const Address = require("../models/address.models");
 
 exports.addAddress = async (req, res) => {
   try {
-    const { userId } = req.params;
+    const userId = req.userId; // Get userId from the JWT token
     const addressData = req.body;
 
     // Find the existing address document for the user
@@ -55,7 +55,7 @@ exports.addAddress = async (req, res) => {
 // Get all addresses for a user
 exports.getAddresses = async (req, res) => {
   try {
-    const { userId } = req.params;
+    const userId = req.userId; // Get userId from the JWT token
 
     // Find addresses for the user
     const addresses = await Address.find({ userId });
@@ -77,33 +77,8 @@ exports.getAddresses = async (req, res) => {
 // Update a specific address
 exports.updateAddress = async (req, res) => {
   try {
-    const { userId, addressId } = req.params;
-    const updatedData = req.body;
-
-    // Find the address by ID and userId
-    const address = await Address.findOneAndUpdate(
-      { _id: addressId, userId },
-      { $set: updatedData },
-      { new: true, runValidators: true } // Return the updated document and run validators
-    );
-
-    if (!address) {
-      return res
-        .status(404)
-        .json({
-          message: "Address not found or does not belong to this user.",
-        });
-    }
-
-    res.status(200).json({ message: "Address updated successfully", address });
-  } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Error updating address", error: error.message });
-  }
-};exports.updateAddress = async (req, res) => {
-  try {
-    const { userId, addressId } = req.params;
+    const userId = req.userId; // Get userId from the JWT token
+    const { addressId } = req.params;
     const updatedData = req.body;
 
     // Find the address document for the user
@@ -130,7 +105,8 @@ exports.updateAddress = async (req, res) => {
 // Remove a specific address
 exports.removeAddress = async (req, res) => {
   try {
-    const { userId, addressId } = req.params;
+    const userId = req.userId; // Get userId from the JWT token
+    const { addressId } = req.params;
 
     // Find the address document for the user and remove the specific address
     const address = await Address.findOneAndUpdate(

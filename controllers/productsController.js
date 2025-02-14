@@ -21,6 +21,13 @@ async function createProducts(products) {
 }
 
 exports.createProducts = async (req, res) => {
+  // Optional: Check if the user has the right role to create products
+  const userRole = req.userRole; // Assuming you set userRole in the JWT middleware
+
+  if (userRole !== "admin") {
+    return res.status(403).json({ error: "Access denied. Admins only." });
+  }
+
   try {
     console.log("Request Body:", req.body);
     const savedProducts = await createProducts(req.body);
@@ -30,17 +37,7 @@ exports.createProducts = async (req, res) => {
       .status(500)
       .json({ error: error.message || "Failed to create a product" });
   }
-}
-
-
-async function readAllProducts() {
-  try {
-    const allProducts = await Product.find();
-    return allProducts;
-  } catch (error) {
-    throw error;
-  }
-}
+};
 
 exports.getProducts = async (req, res) => {
   try {

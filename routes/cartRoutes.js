@@ -1,15 +1,16 @@
 const express = require("express");
 const cartController = require("../controllers/cartController");
+const authMiddleware = require("../middleware/authMiddleware"); // Import the middleware
 
 const router = express.Router();
 
 // Add item to cart
-router.post("/:userId/items", cartController.addItem); // Specify userId in the route
+router.post("/items", authMiddleware, cartController.addItem); // No need for userId in params
 
 // Remove item from cart
-router.delete("/:userId/items/:productId", cartController.removeItem);
+router.delete("/items/:productId", authMiddleware, cartController.removeItem); // No need for userId in params
 
 // Get cart for a user
-router.get("/:userId", cartController.getCart); // Specify userId in the route
+router.get("/", authMiddleware, cartController.getCart); // No need for userId in params
 
 module.exports = router;

@@ -4,6 +4,52 @@ const Cart = require("../models/cart.models");
 const Wishlist = require("../models/wishlist.models");
 const Address = require("../models/address.models");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+
+// Your existing login function
+exports.login = async (req, res) => {
+  const { email, password } = req.body;
+
+  // Check if the user is logging in as a guest
+  if (email === "guest@gmail.com" && password === "guest123") {
+    // ... existing guest login logic
+  }
+
+  // Normal login logic for registered users
+  try {
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(401).json({ message: "Invalid email or password" });
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(401).json({ message: "Invalid email or password" });
+    }
+
+    // Generate JWT
+    const token = jwt.sign(
+      { id: user._id, email: user.email },
+      process.env.JWT_SECRET,
+      { expiresIn: "1h" }
+    );
+
+    res.status(200).json({
+      message: "Login successful",
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        username: user.username,
+      },
+      token, // Send the token back to the client
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
 
 // Register a new user
 exports.register = async (req, res) => {
@@ -58,74 +104,74 @@ exports.register = async (req, res) => {
 };
 
 // Login a user
-exports.login = async (req, res) => {
-  const { email, password } = req.body;
+// exports.login = async (req, res) => {
+//   const { email, password } = req.body;
 
-  // Check if the user is logging in as a guest
-  if (email === "guest@gmail.com" && password === "guest123") {
-    try {
-      // Create or retrieve the guest user
-      let guestUser  = await User.createGuestUser ();
+//   // Check if the user is logging in as a guest
+//   if (email === "guest@gmail.com" && password === "guest123") {
+//     try {
+//       // Create or retrieve the guest user
+//       let guestUser  = await User.createGuestUser ();
 
-      // Check if associated data already exists for the guest user
-      let cart = await Cart.findOne({ userId: guestUser ._id });
-      let wishlist = await Wishlist.findOne({ userId: guestUser ._id });
-      let address = await Address.findOne({ userId: guestUser ._id });
+//       // Check if associated data already exists for the guest user
+//       let cart = await Cart.findOne({ userId: guestUser ._id });
+//       let wishlist = await Wishlist.findOne({ userId: guestUser ._id });
+//       let address = await Address.findOne({ userId: guestUser ._id });
 
-      // If associated data does not exist, create it
-      if (!cart) {
-        cart = new Cart({ userId: guestUser ._id, items: [] });
-        await cart.save();
-      }
-      if (!wishlist) {
-        wishlist = new Wishlist({ userId: guestUser ._id, items: [] });
-        await wishlist.save();
-      }
-      if (!address) {
-        address = new Address({ userId: guestUser ._id, addressDetails: [] });
-        await address.save();
-      }
+//       // If associated data does not exist, create it
+//       if (!cart) {
+//         cart = new Cart({ userId: guestUser ._id, items: [] });
+//         await cart.save();
+//       }
+//       if (!wishlist) {
+//         wishlist = new Wishlist({ userId: guestUser ._id, items: [] });
+//         await wishlist.save();
+//       }
+//       if (!address) {
+//         address = new Address({ userId: guestUser ._id, addressDetails: [] });
+//         await address.save();
+//       }
 
-      return res.status(200).json({
-        message: "Logged in as guest",
-        user: {
-          id: guestUser ._id,
-          email: guestUser .email,
-          isRegistered: guestUser .isRegistered,
-        },
-      });
-    } catch (error) {
-      console.error(error);
-      return res.status(500).json({ error: "Internal server error" });
-    }
-  }
+//       return res.status(200).json({
+//         message: "Logged in as guest",
+//         user: {
+//           id: guestUser ._id,
+//           email: guestUser .email,
+//           isRegistered: guestUser .isRegistered,
+//         },
+//       });
+//     } catch (error) {
+//       console.error(error);
+//       return res.status(500).json({ error: "Internal server error" });
+//     }
+//   }
 
-  // Normal login logic for registered users
-  try {
-    const user = await User.findOne({ email });
-    if (!user) {
-      return res.status(401).json({ message: "Invalid email or password" });
-    }
+//   // Normal login logic for registered users
+//   try {
+//     const user = await User.findOne({ email });
+//     if (!user) {
+//       return res.status(401).json({ message: "Invalid email or password" });
+//     }
 
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) {
-      return res.status(401).json({ message: "Invalid email or password" });
-    }
+//     const isMatch = await bcrypt.compare(password, user.password);
+//     if (!isMatch) {
+//       return res.status(401).json({ message: "Invalid email or password" });
+//     }
 
-    res.status(200).json({
-      message: "Login successful",
-      user: {
-        id: user._id,
-        name: user.name,
-        email: user.email,
-        username: user.username,
-      },
-    });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Internal server error" });
-  }
-};
+//     res.status(200).json({
+//       message: "Login successful",
+//       user: {
+//         id: user._id,
+//         name: user.name,
+//         email: user.email,
+//         username: user.username,
+//       },
+//     });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ error: "Internal server error" });
+//   }
+// };
 
 // Get user by ID or email
 exports.getUser = async (req, res) => {
