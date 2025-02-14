@@ -39,6 +39,15 @@ exports.createProducts = async (req, res) => {
   }
 };
 
+async function readAllProducts() {
+  try {
+    const products = await Product.find(); // Fetch all products from the database
+    return products;
+  } catch (error) {
+    throw error; // Propagate the error
+  }
+}
+
 exports.getProducts = async (req, res) => {
   try {
     const products = await readAllProducts();
@@ -52,7 +61,7 @@ exports.getProducts = async (req, res) => {
       .status(500)
       .json({ error: error.message || "Failed to fetch products" });
   }
-}
+};
 
 async function getProductByID(productId) {
   try {
