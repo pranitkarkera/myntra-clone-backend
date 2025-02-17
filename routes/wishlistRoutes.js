@@ -7,9 +7,9 @@ const router = express.Router();
 router.get("/:userId", wishlistController.getWishlist);
 
 // Add item to wishlist
-router.post("/:userId/items", wishlistController.addItem); // Add item to a specific user's wishlist
+router.post("/:userId/items", wishlistController.addItem);
 
 // Remove item from wishlist
-router.delete("/:userId/items/:productId", wishlistController.removeItem); // Remove a specific item from a user's wishlist
+router.delete("/:userId/items/:productId", wishlistController.removeItem); 
 
 module.exports = router;
