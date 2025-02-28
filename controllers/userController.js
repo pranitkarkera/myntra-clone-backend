@@ -1,16 +1,14 @@
 const mongoose = require("mongoose");
 const User = require("../models/users.models");
 const Address = require("../models/address.models");
-const bcrypt = require("bcryptjs"); // Ensure bcryptjs is installed
+const bcrypt = require("bcryptjs"); 
 
 // Register a new user
-
 exports.register = async (req, res) => {
   try {
-    const { name, email, password, username } = req.body; // Include username
+    const { name, email, password, username } = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);
-    const user = new User({ name, email, password: hashedPassword, username }); // Include username
-    await user.save();
+    const user = new User({ name, email, password: hashedPassword, username });
     res.status(201).json({ message: "User  registered successfully", user });
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -39,7 +37,6 @@ exports.getUser = async (req, res) => {
   try {
     const email = req.params.email;
 
-    // Check if userId is a valid ObjectId
     if (!email) {
       return res.status(400).json({ error: "Invalid email id" });
     }
@@ -61,7 +58,7 @@ exports.updateUser  = async (req, res) => {
     const user = await User.findOneAndUpdate(
       { email },
       { name, username },
-      { new: true } // Return the updated user
+      { new: true }
     );
 
     if (!user) return res.status(404).json({ message: "User  not found" });
@@ -77,11 +74,9 @@ exports.deleteUser = async (req, res) => {
   try {
     const email = req.params.email;
 
-    // Delete the user
     const user = await User.findOneAndDelete({email});
     if (!user) return res.status(404).json({ message: "User not found" });
 
-    // Delete all addresses associated with the user (cascading delete)
     await Address.deleteMany({ email });
 
     res

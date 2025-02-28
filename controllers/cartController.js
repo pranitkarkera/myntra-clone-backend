@@ -14,7 +14,6 @@ exports.addItem = async (req, res) => {
     quantity,
   } = req.body;
 
-  // Validate input
   if (
     !userId ||
     !productId ||
@@ -39,10 +38,8 @@ exports.addItem = async (req, res) => {
     );
 
     if (itemIndex > -1) {
-      // Update quantity if item already exists
       cart.items[itemIndex].quantity += quantity || 1;
     } else {
-      // Add new item to cart
       cart.items.push({
         productId,
         productName,
@@ -66,14 +63,12 @@ exports.addItem = async (req, res) => {
 exports.removeItem = async (req, res) => {
   const { userId, productId } = req.body;
 
-  // Validate input
   if (!userId || !productId) {
     return res.status(400).json({ message: "Missing required fields" });
   }
 
   try {
     const cart = await Cart.findOne({ userId });
-
     if (!cart) {
       return res.status(404).json({ message: "Cart not found" });
     }
@@ -94,7 +89,6 @@ exports.removeItem = async (req, res) => {
 exports.getCart = async (req, res) => {
   const { userId } = req.params;
 
-  // Validate input
   if (!userId) {
     return res.status(400).json({ message: "Missing userId" });
   }

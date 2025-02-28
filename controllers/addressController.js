@@ -16,7 +16,6 @@ exports.addAddress = async (req, res) => {
       defaultAddress: isDefault,
     } = req.body;
 
-    // Validate required fields
     if (
       !name ||
       !number ||
@@ -39,7 +38,7 @@ exports.addAddress = async (req, res) => {
       zipCode,
       country,
       addressType,
-      defaultAddress: isDefault || false, // Default to false if not provided
+      defaultAddress: isDefault || false, 
     });
 
     await address.save();
@@ -52,10 +51,10 @@ exports.addAddress = async (req, res) => {
 // Get all addresses
 exports.getAllAddresses = async (req, res) => {
   try {
-    const addresses = await Address.find(); // Fetch all addresses from the database
-    res.status(200).json(addresses); // Return the addresses in the response
+    const addresses = await Address.find();
+    res.status(200).json(addresses);
   } catch (error) {
-    res.status(500).json({ error: error.message }); // Handle any errors
+    res.status(500).json({ error: error.message });
   }
 };
 

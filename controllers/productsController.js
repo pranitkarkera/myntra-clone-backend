@@ -1,6 +1,5 @@
 const Product = require("../models/products.models");
 
-
 async function createProducts(products) {
   try {
     if (!Array.isArray(products)) {
