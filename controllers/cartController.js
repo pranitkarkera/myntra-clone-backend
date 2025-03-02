@@ -1,6 +1,8 @@
 const Cart = require("../models/cart.models");
 
 // Add item to cart
+const mongoose = require("mongoose");
+
 exports.addItem = async (req, res) => {
   const { userId } = req.params;
   const {
@@ -13,6 +15,7 @@ exports.addItem = async (req, res) => {
     quantity,
   } = req.body;
 
+  // Validate input
   if (
     !userId ||
     !productId ||
@@ -23,6 +26,14 @@ exports.addItem = async (req, res) => {
     !discountPercent
   ) {
     return res.status(400).json({ message: "Missing required fields" });
+  }
+
+  // Validate ObjectId for userId and productId
+  if (!mongoose.Types.ObjectId.isValid(userId)) {
+    return res.status(400).json({ message: "Invalid user ID" });
+  }
+  if (!mongoose.Types.ObjectId.isValid(productId)) {
+    return res.status(400).json({ message: "Invalid product ID" });
   }
 
   try {
