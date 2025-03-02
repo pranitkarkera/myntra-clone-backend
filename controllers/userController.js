@@ -70,16 +70,16 @@ exports.login = async (req, res) => {
   }
 };
 
-// Get user by email
+// Get user by userId
 exports.getUser = async (req, res) => {
   try {
-    const email = req.params.email;
+    const userId = req.params.userId;
 
-    if (!email) {
-      return res.status(400).json({ error: "Invalid email id" });
+    if (!userId) {
+      return res.status(400).json({ error: "Invalid user ID" });
     }
 
-    const user = await User.findOne({ email });
+    const user = await User.findById(userId);
     if (!user) return res.status(404).json({ message: "User not found" });
     res.status(200).json(user);
   } catch (error) {
@@ -88,22 +88,23 @@ exports.getUser = async (req, res) => {
   }
 };
 
-// Update user by email
+
+// Update user by userId
 exports.updateUser = async (req, res) => {
   try {
     const { name, username } = req.body;
-    const email = req.params.email;
+    const userId = req.params.userId;
 
-    if (!email) {
-      return res.status(400).json({ error: "Invalid email address" });
+    if (!userId) {
+      return res.status(400).json({ error: "Invalid user ID" });
     }
 
     if (!name || !username) {
       return res.status(400).json({ error: "Name and username are required" });
     }
 
-    const user = await User.findOneAndUpdate(
-      { email },
+    const user = await User.findByIdAndUpdate(
+      userId,
       { name, username },
       { new: true }
     );
@@ -116,25 +117,26 @@ exports.updateUser = async (req, res) => {
   }
 };
 
+
 // Delete a user and their associated addresses
 exports.deleteUser = async (req, res) => {
   console.log("Delete User endpoint called");
   try {
-    const email = req.params.email;
+    const userId = req.params.userId;
 
-    if (!email) {
-      return res.status(400).json({ error: "Invalid email id" });
+    if (!userId) {
+      return res.status(400).json({ error: "Invalid user ID" });
     }
 
-    const user = await User.findOneAndDelete({ email });
+    const user = await User.findByIdAndDelete(userId);
     if (!user) return res.status(404).json({ message: "User not found" });
 
-    await Address.deleteMany({ email });
-    await Cart.deleteMany({ userId: user._id });
-    await Wishlist.deleteMany({ userId: user._id });
-    await Order.deleteMany({ userId: user._id });
+    await Address.deleteMany({ userId: userId });
+    await Cart.deleteMany({ userId: userId });
+    await Wishlist.deleteMany({ userId: userId });
+    await Order.deleteMany({ userId: userId });
 
-    console.log(`User with email ${email} deleted successfully`);
+    console.log(`User with ID ${userId} deleted successfully`);
     res
       .status(200)
       .json({ message: "User and associated data deleted successfully" });
