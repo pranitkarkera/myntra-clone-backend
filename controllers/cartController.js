@@ -1,8 +1,8 @@
 const Cart = require("../models/cart.models");
 
-// Add item to cart
 const mongoose = require("mongoose");
 
+//add to cart
 exports.addItem = async (req, res) => {
   const { userId } = req.params;
   const {
@@ -28,15 +28,15 @@ exports.addItem = async (req, res) => {
     return res.status(400).json({ message: "Missing required fields" });
   }
 
-  // Validate ObjectId for userId and productId
+  // Validate ObjectId for userId
   if (!mongoose.Types.ObjectId.isValid(userId)) {
     return res.status(400).json({ message: "Invalid user ID" });
   }
-  if (!mongoose.Types.ObjectId.isValid(productId)) {
-    return res.status(400).json({ message: "Invalid product ID" });
-  }
 
   try {
+    // Convert productId to ObjectId
+    const objectProductId = mongoose.Types.ObjectId(productId);
+
     let cart = await Cart.findOne({ userId });
 
     if (!cart) {
@@ -44,14 +44,14 @@ exports.addItem = async (req, res) => {
     }
 
     const itemIndex = cart.items.findIndex(
-      (item) => item.productId.toString() === productId
+      (item) => item.productId.toString() === objectProductId.toString()
     );
 
     if (itemIndex > -1) {
       cart.items[itemIndex].quantity += quantity || 1;
     } else {
       cart.items.push({
-        productId,
+        productId: objectProductId, // Use ObjectId here
         productName,
         brandName,
         price,
