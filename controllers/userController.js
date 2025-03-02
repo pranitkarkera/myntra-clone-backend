@@ -62,6 +62,7 @@ exports.login = async (req, res) => {
       jwtToken,
       email,
       name: user.name,
+      user: user
     });
   } catch (err) {
     console.error(err); // Log the error for debugging
