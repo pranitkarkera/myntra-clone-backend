@@ -92,20 +92,16 @@ exports.getUser = async (req, res) => {
 // Update user by userId
 exports.updateUser = async (req, res) => {
   try {
-    const { name, username } = req.body;
+    const { name } = req.body;
     const userId = req.params.userId;
 
     if (!userId) {
       return res.status(400).json({ error: "Invalid user ID" });
     }
 
-    if (!name || !username) {
-      return res.status(400).json({ error: "Name and username are required" });
-    }
-
     const user = await User.findByIdAndUpdate(
       userId,
-      { name, username },
+      { name},
       { new: true }
     );
 
