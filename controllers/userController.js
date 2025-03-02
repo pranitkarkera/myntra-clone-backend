@@ -114,7 +114,7 @@ exports.updateUser = async (req, res) => {
 };
 
 
-// Delete a user and their associated addresses
+// Delete a user
 exports.deleteUser = async (req, res) => {
   console.log("Delete User endpoint called");
   try {
@@ -127,17 +127,13 @@ exports.deleteUser = async (req, res) => {
     const user = await User.findByIdAndDelete(userId);
     if (!user) return res.status(404).json({ message: "User not found" });
 
-    await Address.deleteMany({ userId: userId });
-    await Cart.deleteMany({ userId: userId });
-    await Wishlist.deleteMany({ userId: userId });
-    await Order.deleteMany({ userId: userId });
-
     console.log(`User with ID ${userId} deleted successfully`);
     res
       .status(200)
-      .json({ message: "User and associated data deleted successfully" });
+      .json({ message: "User deleted successfully" });
   } catch (error) {
     console.error(error); // Log the error for debugging
     res.status(500).json({ error: error.message });
   }
 };
+
