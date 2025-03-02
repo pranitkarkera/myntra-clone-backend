@@ -19,7 +19,7 @@ const wishlistSchema = new mongoose.Schema(
       },
     ],
   },
-  { timestamps: true } // Automatically manage createdAt and updatedAt
+  { timestamps: true }
 );
 
 module.exports = mongoose.model("Wishlist", wishlistSchema);

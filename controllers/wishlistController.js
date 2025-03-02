@@ -4,14 +4,34 @@ const mongoose = require("mongoose");
 // Add item to wishlist
 exports.addItem = async (req, res) => {
   const { userId } = req.params;
-  const { productId, ...rest } = req.body;
+  const {
+    productId,
+    productName,
+    brandName,
+    price,
+    originalPrice,
+    discountPercent,
+  } = req.body;
 
+  // Validate input
+  if (
+    !userId ||
+    !productId ||
+    !productName ||
+    !brandName ||
+    !price ||
+    !originalPrice ||
+    !discountPercent
+  ) {
+    return res.status(400).json({ message: "All fields are required" });
+  }
+
+  // Validate ObjectId for userId and productId
   if (!mongoose.Types.ObjectId.isValid(userId)) {
     return res.status(400).json({ message: "Invalid user ID" });
   }
-
-  if (!productId) {
-    return res.status(400).json({ message: "Product ID is required" });
+  if (!mongoose.Types.ObjectId.isValid(productId)) {
+    return res.status(400).json({ message: "Invalid product ID" });
   }
 
   try {
@@ -28,7 +48,15 @@ exports.addItem = async (req, res) => {
       return res.status(400).json({ message: "Item already in wishlist" });
     }
 
-    wishlist.items.push({ productId, ...rest });
+    wishlist.items.push({
+      productId,
+      productName,
+      brandName,
+      price,
+      originalPrice,
+      discountPercent,
+    });
+
     await wishlist.save();
 
     res.status(201).json({ message: "Item added to wishlist", wishlist });
@@ -37,7 +65,6 @@ exports.addItem = async (req, res) => {
     res.status(500).json({ message: "Server error", error: err.message });
   }
 };
-
 
 // Remove item from wishlist
 exports.removeItem = async (req, res) => {
