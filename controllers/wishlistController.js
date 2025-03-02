@@ -100,6 +100,10 @@ exports.removeItem = async (req, res) => {
 exports.getWishlist = async (req, res) => {
   const { userId } = req.params;
 
+  if (!mongoose.Types.ObjectId.isValid(userId)) {
+    return res.status(400).json({ message: "Invalid user ID" });
+  }
+
   try {
     const wishlist = await Wishlist.findOne({ userId });
 
