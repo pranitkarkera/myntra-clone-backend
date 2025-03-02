@@ -3,8 +3,8 @@ const mongoose = require("mongoose");
 
 // Add item to wishlist
 exports.addItem = async (req, res) => {
+  const { userId } = req.params;
   const {
-    userId,
     productId,
     productName,
     brandName,
@@ -59,8 +59,7 @@ exports.addItem = async (req, res) => {
 
 // Remove item from wishlist
 exports.removeItem = async (req, res) => {
-  const { userId } = req.params; 
-  const { productId } = req.params;
+  const { userId, productId } = req.params;
 
   if (!userId || !productId) {
     return res
@@ -77,10 +76,10 @@ exports.removeItem = async (req, res) => {
 
     console.log("Current Wishlist:", wishlist);
 
-    const productObjectId = new mongoose.Types.ObjectId(productId); 
+    const productObjectId = new mongoose.Types.ObjectId(productId);
 
-    const itemIndex = wishlist.items.findIndex(
-      (item) => item.productId.equals(productObjectId) 
+    const itemIndex = wishlist.items.findIndex((item) =>
+      item.productId.equals(productObjectId)
     );
 
     if (itemIndex === -1) {
@@ -110,7 +109,7 @@ exports.getWishlist = async (req, res) => {
 
     res.status(200).json(wishlist);
   } catch (err) {
-    console.error(err); 
+    console.error(err);
     res.status(500).json({ message: "Server error", error: err.message });
   }
 };

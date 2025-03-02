@@ -3,7 +3,8 @@ const Order = require("../models/orders.models");
 // Add a new order
 exports.placeOrder = async (req, res) => {
   try {
-    const { userId, email, products, totalAmount } = req.body;
+    const { userId } = req.params;
+    const { email, products, totalAmount } = req.body;
 
     if (!userId || !email || !products || !totalAmount) {
       return res.status(400).json({ error: "Missing required fields" });
@@ -21,13 +22,13 @@ exports.placeOrder = async (req, res) => {
 // Get order history for a user
 exports.getOrderHistory = async (req, res) => {
   try {
-    const { email } = req.params;
+    const { userId } = req.params;
 
-    if (!email) {
-      return res.status(400).json({ error: "Invalid email id" });
+    if (!userId) {
+      return res.status(400).json({ error: "Invalid user ID" });
     }
 
-    const orders = await Order.find({ email }).sort({ orderDate: -1 }); // Sort by most recent orders
+    const orders = await Order.find({ userId }).sort({ orderDate: -1 }); // Sort by most recent orders
     if (orders.length === 0) {
       return res.status(404).json({ error: "No orders found" });
     }
@@ -41,15 +42,16 @@ exports.getOrderHistory = async (req, res) => {
 // Get specific order details by order ID
 exports.getOrderDetails = async (req, res) => {
   try {
+    const { userId } = req.params;
     const { orderId } = req.params;
 
-    if (!orderId) {
-      return res.status(400).json({ error: "Invalid order ID" });
+    if (!userId || !orderId) {
+      return res.status(400).json({ error: "Invalid user ID or order ID" });
     }
 
-    const order = await Order.findById(orderId);
+    const order = await Order.findOne({ userId, _id: orderId });
     if (!order) {
-      return res.status(404).json({ error: "Order not found" });
+      return res.status(404).json({ error: "Order not found for this user" });
     }
 
     res.status(200).json(order);
@@ -57,3 +59,4 @@ exports.getOrderDetails = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+

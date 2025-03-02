@@ -1,10 +1,9 @@
-const mongoose = require("mongoose");
 const Cart = require("../models/cart.models");
 
 // Add item to cart
 exports.addItem = async (req, res) => {
+  const { userId } = req.params;
   const {
-    userId,
     productId,
     productName,
     brandName,
@@ -61,7 +60,7 @@ exports.addItem = async (req, res) => {
 
 // Remove item from cart
 exports.removeItem = async (req, res) => {
-  const { userId, productId } = req.body;
+  const { userId, productId } = req.params;
 
   if (!userId || !productId) {
     return res.status(400).json({ message: "Missing required fields" });

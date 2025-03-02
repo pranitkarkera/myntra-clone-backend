@@ -1,14 +1,22 @@
 const express = require("express");
-const ordersController = require("../controllers/ordersController");
 const router = express.Router();
+const ordersController = require("../controllers/ordersController");
+const ensureAuthenticated = require("../middleware/AuthMiddleware");
 
-// Place a new order
-router.post("/place-order", ordersController.placeOrder);
-
-// Get all orders for a user by email
-router.get("/history/:email", ordersController.getOrderHistory);
-
-// Get specific order details by order ID
-router.get("/:orderId", ordersController.getOrderDetails);
+router.post(
+  "/:userId/place-order",
+  ensureAuthenticated,
+  ordersController.placeOrder
+);
+router.get(
+  "/:userId/history",
+  ensureAuthenticated,
+  ordersController.getOrderHistory
+);
+router.get(
+  "/:userId/details/:orderId",
+  ensureAuthenticated,
+  ordersController.getOrderDetails
+);
 
 module.exports = router;

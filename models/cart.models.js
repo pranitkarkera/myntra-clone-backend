@@ -4,8 +4,8 @@ const cartSchema = new mongoose.Schema(
   {
     userId: {
       type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
       required: true,
-      unique: true,
     },
     items: [
       {
@@ -20,7 +20,7 @@ const cartSchema = new mongoose.Schema(
       },
     ],
   },
-  { timestamps: true } // Automatically manage createdAt and updatedAt
+  { timestamps: true }
 );
 
 module.exports = mongoose.model("Cart", cartSchema);

@@ -1,9 +1,9 @@
-// const mongoose = require("mongoose");
 const Address = require("../models/address.models");
 
 // Add a new address
 exports.addAddress = async (req, res) => {
   try {
+    const { userId } = req.params;
     const {
       name,
       number,
@@ -30,6 +30,7 @@ exports.addAddress = async (req, res) => {
     }
 
     const address = new Address({
+      userId,
       name,
       number,
       street,
@@ -38,7 +39,7 @@ exports.addAddress = async (req, res) => {
       zipCode,
       country,
       addressType,
-      defaultAddress: isDefault || false, 
+      defaultAddress: isDefault || false,
     });
 
     await address.save();
@@ -48,32 +49,40 @@ exports.addAddress = async (req, res) => {
   }
 };
 
-// Get all addresses
+// Get all addresses for a user
 exports.getAllAddresses = async (req, res) => {
   try {
-    const addresses = await Address.find();
+    const { userId } = req.params;
+
+    const addresses = await Address.find({ userId });
     res.status(200).json(addresses);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
 
-// Get address by user id
-exports.getAddressesByUser = async (req, res) => {
+// Get a specific address by ID for a user
+exports.getAddressById = async (req, res) => {
   try {
-    const { number } = req.params;
+    const { userId } = req.params;
+    const { addressId } = req.params;
 
-    const addresses = await Address.find({ number });
-    res.status(200).json(addresses);
+    const address = await Address.findOne({ userId, _id: addressId });
+    if (!address) {
+      return res.status(404).json({ message: "Address not found" });
+    }
+    res.status(200).json(address);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
+
 
 // Update an address
 exports.updateAddress = async (req, res) => {
   try {
-    const { number } = req.params;
+    const { userId } = req.params;
+    const { addressId } = req.params; // Assuming you pass addressId as a param
     const {
       name,
       street,
@@ -86,7 +95,7 @@ exports.updateAddress = async (req, res) => {
     } = req.body;
 
     const address = await Address.findOneAndUpdate(
-      { number },
+      { userId, _id: addressId },
       {
         name,
         street,
@@ -113,9 +122,10 @@ exports.updateAddress = async (req, res) => {
 // Delete an address
 exports.deleteAddress = async (req, res) => {
   try {
-    const { number } = req.params;
+    const { userId } = req.params;
+    const { addressId } = req.params; // Assuming you pass addressId as a param
 
-    const address = await Address.findOneAndDelete({ number });
+    const address = await Address.findOneAndDelete({ userId, _id: addressId });
 
     if (!address) {
       return res.status(404).json({ message: "Address not found" });
