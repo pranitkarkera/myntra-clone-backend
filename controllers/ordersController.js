@@ -4,13 +4,13 @@ const Order = require("../models/orders.models");
 exports.placeOrder = async (req, res) => {
   try {
     const { userId } = req.params;
-    const { email, products, totalAmount } = req.body;
+    const { products, totalAmount } = req.body;
 
-    if (!userId || !email || !products || !totalAmount) {
+    if (!userId || !products || !totalAmount) {
       return res.status(400).json({ error: "Missing required fields" });
     }
 
-    const order = new Order({ userId, email, products, totalAmount });
+    const order = new Order({ userId, products, totalAmount });
     await order.save();
 
     res.status(201).json({ message: "Order placed successfully", order });
