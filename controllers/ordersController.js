@@ -1,5 +1,5 @@
 const Order = require("../models/orders.models");
-
+const Cart = require("../models/cart.models")
 // Add a new order
 exports.placeOrder = async (req, res) => {
   try {
