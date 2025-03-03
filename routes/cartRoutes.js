@@ -9,6 +9,11 @@ router.delete(
   ensureAuthenticated,
   cartController.removeItem
 );
+router.put(
+  "/:userId/items/:productId",
+  ensureAuthenticated,
+  cartController.updateItemQuantity
+);
 router.get("/:userId", ensureAuthenticated, cartController.getCart);
 
 module.exports = router;

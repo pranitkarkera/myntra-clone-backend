@@ -114,3 +114,39 @@ exports.getCart = async (req, res) => {
     res.status(500).json({ message: "Server error", error: err.message });
   }
 };
+
+exports.updateItemQuantity = async (req, res) => {
+  const { userId, productId } = req.params;
+  const { quantity } = req.body;
+
+  if (!userId || !productId || !quantity) {
+    return res.status(400).json({ message: "Missing required fields" });
+  }
+
+  try {
+    const cart = await Cart.findOne({ userId });
+
+    if (!cart) {
+      return res.status(404).json({ message: "Cart not found" });
+    }
+
+    const itemIndex = cart.items.findIndex(
+      (item) => item.productId === parseInt(productId)
+    );
+
+    if (itemIndex === -1) {
+      return res.status(404).json({ message: "Item not found in cart" });
+    }
+
+    // Update quantity
+    cart.items[itemIndex].quantity = quantity;
+
+    await cart.save();
+    res
+      .status(200)
+      .json({ message: "Item quantity updated successfully", cart });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error", error: err.message });
+  }
+};
