@@ -10,7 +10,12 @@ exports.placeOrder = async (req, res) => {
       return res.status(400).json({ error: "Missing required fields" });
     }
 
-    const order = new Order({ userId, products, totalAmount });
+    const order = new Order({
+      userId,
+      products,
+      totalAmount,
+      status: "pending", // Explicitly set status if not provided
+    });
     await order.save();
 
     res.status(201).json({ message: "Order placed successfully", order });
