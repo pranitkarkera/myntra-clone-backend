@@ -11,6 +11,7 @@ exports.addItem = async (req, res) => {
     price,
     originalPrice,
     discountPercent,
+    images,
   } = req.body;
 
   // Validate input
@@ -52,6 +53,7 @@ exports.addItem = async (req, res) => {
       price,
       originalPrice,
       discountPercent,
+      images,
     });
 
     await wishlist.save();

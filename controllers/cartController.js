@@ -12,6 +12,7 @@ exports.addItem = async (req, res) => {
     originalPrice,
     discountPercent,
     quantity,
+    images,
   } = req.body;
 
   // Validate input
@@ -54,6 +55,7 @@ exports.addItem = async (req, res) => {
         originalPrice,
         discountPercent,
         quantity: quantity || 1,
+        images,
       });
     }
 
