@@ -13,7 +13,6 @@ exports.addAddress = async (req, res) => {
       zipCode,
       country,
       addressType,
-      defaultAddress: isDefault,
     } = req.body;
 
     if (
@@ -39,7 +38,6 @@ exports.addAddress = async (req, res) => {
       zipCode,
       country,
       addressType,
-      defaultAddress: isDefault || false,
     });
 
     await address.save();
@@ -91,7 +89,6 @@ exports.updateAddress = async (req, res) => {
       zipCode,
       country,
       addressType,
-      defaultAddress: isDefault,
     } = req.body;
 
     const address = await Address.findOneAndUpdate(
@@ -104,7 +101,6 @@ exports.updateAddress = async (req, res) => {
         zipCode,
         country,
         addressType,
-        defaultAddress: isDefault,
       },
       { new: true }
     );
