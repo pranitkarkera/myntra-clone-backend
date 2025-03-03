@@ -1,13 +1,12 @@
 const Order = require("../models/orders.models");
-const Cart = require("../models/cart.models");
 
 // Add a new order
 exports.placeOrder = async (req, res) => {
   try {
     const { userId } = req.params;
-    const { products, totalAmount, deliveryAddress } = req.body;
+    const { products, totalAmount} = req.body;
 
-    if (!userId || !products || !totalAmount || !deliveryAddress) {
+    if (!userId || !products || !totalAmount ) {
       return res.status(400).json({ error: "Missing required fields" });
     }
 
@@ -15,7 +14,6 @@ exports.placeOrder = async (req, res) => {
       userId,
       products,
       totalAmount,
-      deliveryAddress,
     });
 
     await order.save();
