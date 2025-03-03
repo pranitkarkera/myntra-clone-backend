@@ -1,8 +1,7 @@
 const Cart = require("../models/cart.models");
-
 const mongoose = require("mongoose");
 
-//add to cart
+// Add item to cart
 exports.addItem = async (req, res) => {
   const { userId } = req.params;
   const {
@@ -34,9 +33,6 @@ exports.addItem = async (req, res) => {
   }
 
   try {
-    // Convert productId to ObjectId
-    const objectProductId = mongoose.Types.ObjectId(productId);
-
     let cart = await Cart.findOne({ userId });
 
     if (!cart) {
@@ -44,14 +40,14 @@ exports.addItem = async (req, res) => {
     }
 
     const itemIndex = cart.items.findIndex(
-      (item) => item.productId.toString() === objectProductId.toString()
+      (item) => item.productId === parseInt(productId)
     );
 
     if (itemIndex > -1) {
       cart.items[itemIndex].quantity += quantity || 1;
     } else {
       cart.items.push({
-        productId: objectProductId, // Use ObjectId here
+        productId: parseInt(productId),
         productName,
         brandName,
         price,
@@ -84,7 +80,7 @@ exports.removeItem = async (req, res) => {
     }
 
     cart.items = cart.items.filter(
-      (item) => item.productId.toString() !== productId
+      (item) => item.productId !== parseInt(productId)
     );
     await cart.save();
 

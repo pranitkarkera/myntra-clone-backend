@@ -26,12 +26,9 @@ exports.addItem = async (req, res) => {
     return res.status(400).json({ message: "All fields are required" });
   }
 
-  // Validate ObjectId for userId and productId
+  // Validate ObjectId for userId
   if (!mongoose.Types.ObjectId.isValid(userId)) {
     return res.status(400).json({ message: "Invalid user ID" });
-  }
-  if (!mongoose.Types.ObjectId.isValid(productId)) {
-    return res.status(400).json({ message: "Invalid product ID" });
   }
 
   try {
@@ -42,7 +39,7 @@ exports.addItem = async (req, res) => {
     }
 
     const itemExists = wishlist.items.some(
-      (item) => item.productId.toString() === productId
+      (item) => item.productId === productId
     );
     if (itemExists) {
       return res.status(400).json({ message: "Item already in wishlist" });
@@ -83,12 +80,8 @@ exports.removeItem = async (req, res) => {
       return res.status(404).json({ message: "Wishlist not found" });
     }
 
-    console.log("Current Wishlist:", wishlist);
-
-    const productObjectId = new mongoose.Types.ObjectId(productId);
-
-    const itemIndex = wishlist.items.findIndex((item) =>
-      item.productId.equals(productObjectId)
+    const itemIndex = wishlist.items.findIndex(
+      (item) => item.productId === parseInt(productId)
     );
 
     if (itemIndex === -1) {
