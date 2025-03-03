@@ -1,4 +1,5 @@
 const Order = require("../models/orders.models");
+const Cart = require("../models/cart.models");
 
 // Add a new order
 exports.placeOrder = async (req, res) => {
@@ -16,7 +17,11 @@ exports.placeOrder = async (req, res) => {
       totalAmount,
       deliveryAddress,
     });
+
     await order.save();
+
+    // Clear cart items after placing the order
+    await Cart.updateOne({ userId }, { $set: { items: [] } });
 
     res.status(201).json({ message: "Order placed successfully", order });
   } catch (error) {
