@@ -1,7 +1,6 @@
 const Order = require("../models/orders.models");
 
 // Add a new order
-// Add a new order
 exports.placeOrder = async (req, res) => {
   try {
     const { userId } = req.params;
