@@ -1,5 +1,3 @@
-const mongoose = require("mongoose");
-
 const orderSchema = new mongoose.Schema({
   userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
   products: [
@@ -19,7 +17,11 @@ const orderSchema = new mongoose.Schema({
     type: String,
     required: true,
     enum: ["pending", "shipped", "delivered"],
-    default: "pending"
+    default: "pending",
+  },
+  deliveryAddress: {
+    type: Object,
+    required: true,
   },
 });
 
