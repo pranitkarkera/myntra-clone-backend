@@ -54,7 +54,8 @@ exports.getOrderDetails = async (req, res) => {
     console.log("Incoming request params:", req.params);
     console.log("Decoded JWT user:", req.user);
 
-    const { userId, orderId } = req.params;
+    const { orderId } = req.params;
+    const userId = req.user._id; // Fetch userId from authenticated request
 
     if (!userId || !orderId) {
       console.error("Missing parameters:", { userId, orderId });
@@ -64,7 +65,7 @@ exports.getOrderDetails = async (req, res) => {
     const order = await Order.findOne({
       userId: mongoose.Types.ObjectId(userId),
       _id: mongoose.Types.ObjectId(orderId),
-    })
+    });
 
     if (!order) {
       console.error("Order not found for user:", userId);
