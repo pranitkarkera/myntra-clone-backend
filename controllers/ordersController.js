@@ -30,7 +30,7 @@ exports.placeOrder = async (req, res) => {
 // Get order history for a user
 exports.getOrderHistory = async (req, res) => {
   try {
-    const { userId } = req.params;
+    const userId = req.user._id;
 
     if (!userId) {
       return res.status(400).json({ error: "Invalid user ID" });
@@ -50,7 +50,7 @@ exports.getOrderHistory = async (req, res) => {
 // Get specific order details by order ID
 exports.getOrderDetails = async (req, res) => {
   try {
-    const { userId } = req.params;
+    const { userId } = req.user;
     const { orderId } = req.params;
 
     if (!userId || !orderId) {
