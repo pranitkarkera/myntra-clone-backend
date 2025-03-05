@@ -51,23 +51,30 @@ exports.getOrderHistory = async (req, res) => {
 // Get specific order details by order ID
 exports.getOrderDetails = async (req, res) => {
   try {
+    console.log("Incoming request params:", req.params);
+    console.log("Decoded JWT user:", req.user);
+
     const { userId, orderId } = req.params;
 
     if (!userId || !orderId) {
+      console.error("Missing parameters:", { userId, orderId });
       return res.status(400).json({ error: "Invalid user ID or order ID" });
     }
 
     const order = await Order.findOne({
       userId: mongoose.Types.ObjectId(userId),
-      _id: orderId,
-    });
+      _id: mongoose.Types.ObjectId(orderId),
+    }).populate("products.productId");
+
     if (!order) {
+      console.error("Order not found for user:", userId);
       return res.status(404).json({ error: "Order not found for this user" });
     }
 
+    console.log("Order details found:", order);
     res.status(200).json(order);
   } catch (error) {
+    console.error("Error fetching order:", error);
     res.status(500).json({ error: error.message });
   }
 };
-
