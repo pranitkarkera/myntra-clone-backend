@@ -1,5 +1,6 @@
 const Order = require("../models/orders.models");
 const Cart = require("../models/cart.models")
+const mongoose = require("mongoose");
 // Add a new order
 exports.placeOrder = async (req, res) => {
   try {
@@ -50,14 +51,16 @@ exports.getOrderHistory = async (req, res) => {
 // Get specific order details by order ID
 exports.getOrderDetails = async (req, res) => {
   try {
-    const { userId } = req.user;
-    const { orderId } = req.params;
+    const { userId, orderId } = req.params;
 
     if (!userId || !orderId) {
       return res.status(400).json({ error: "Invalid user ID or order ID" });
     }
 
-    const order = await Order.findOne({ userId, _id: orderId });
+    const order = await Order.findOne({
+      userId: mongoose.Types.ObjectId(userId),
+      _id: orderId,
+    });
     if (!order) {
       return res.status(404).json({ error: "Order not found for this user" });
     }
