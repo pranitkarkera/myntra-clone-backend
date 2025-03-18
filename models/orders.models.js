@@ -4,7 +4,11 @@ const orderSchema = new mongoose.Schema({
   userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
   products: [
     {
-      productId: { type: Number, required: true },
+      productId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Product",
+        required: true,
+      },
       productName: { type: String, required: true },
       brandName: { type: String, required: true },
       price: { type: Number, required: true },
@@ -20,7 +24,7 @@ const orderSchema = new mongoose.Schema({
     required: true,
     enum: ["pending", "shipped", "delivered"],
     default: "pending",
-  }
+  },
 });
 
 module.exports = mongoose.model("Order", orderSchema);
