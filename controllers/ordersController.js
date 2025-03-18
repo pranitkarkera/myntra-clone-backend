@@ -12,19 +12,19 @@ exports.placeOrder = async (req, res) => {
       return res.status(400).json({ error: "Missing required fields" });
     }
 
-    // Ensure productId is a number
-    const formattedProducts = products.map((product) => {
-      if (typeof product.productId !== "number") {
-        throw new Error(`Invalid productId: ${product.productId}`);
-      }
-      return {
-        ...product,
-        productId: product.productId, // Keep as number
-      };
-    });
+    // Validate userId
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
+      return res.status(400).json({ error: "Invalid user ID" });
+    }
+
+    // Convert productId to ObjectId (if needed)
+    const formattedProducts = products.map((product) => ({
+      ...product,
+      productId: product.productId, // Keep as number (no conversion needed)
+    }));
 
     const order = new Order({
-      userId: mongoose.Types.ObjectId(userId), // Convert to ObjectId
+      userId: mongoose.Types.ObjectId(userId), // Remove `new` keyword
       products: formattedProducts,
       totalAmount,
     });
@@ -109,7 +109,7 @@ exports.getOrderDetails = async (req, res) => {
 
     // Replace products array with products containing details
     order.products = productsWithDetails;
-    
+
     res.status(200).json(order);
   } catch (error) {
     console.error("Error fetching order:", error);
