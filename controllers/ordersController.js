@@ -54,9 +54,8 @@ exports.getOrderDetails = async (req, res) => {
     console.log("Incoming request params:", req.params);
     console.log("Decoded JWT user:", req.user);
 
-    const { orderId } = req.params;
-    const userId = req.user._id; // Fetch userId from authenticated request
-
+    const { userId, orderId } = req.params;
+    
     if (!userId || !orderId) {
       console.error("Missing parameters:", { userId, orderId });
       return res.status(400).json({ error: "Invalid user ID or order ID" });
