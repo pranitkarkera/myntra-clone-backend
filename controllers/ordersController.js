@@ -1,5 +1,6 @@
 const Order = require("../models/orders.models");
 const Cart = require("../models/cart.models")
+const Product = require("../models/products.models")
 const mongoose = require("mongoose");
 
 exports.placeOrder = async (req, res) => {
