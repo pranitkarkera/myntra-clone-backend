@@ -77,8 +77,8 @@ exports.getOrderDetails = async (req, res) => {
     }
 
     const order = await Order.findOne({
-      userId: mongoose.Types.ObjectId(userId),
-      _id: mongoose.Types.ObjectId(orderId),
+      userId: new mongoose.Types.ObjectId(userId),
+      _id: new mongoose.Types.ObjectId(orderId),
     }).populate("products.productId"); // Populate product details if needed
 
     if (!order) {
