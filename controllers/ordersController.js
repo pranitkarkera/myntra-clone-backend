@@ -2,7 +2,6 @@ const Order = require("../models/orders.models");
 const Cart = require("../models/cart.models")
 const mongoose = require("mongoose");
 
-// Add a new order
 exports.placeOrder = async (req, res) => {
   try {
     const { userId } = req.params;
@@ -24,7 +23,7 @@ exports.placeOrder = async (req, res) => {
     }));
 
     const order = new Order({
-      userId: mongoose.Types.ObjectId(userId), // Remove `new` keyword
+      userId: new mongoose.Types.ObjectId(userId), // Use `new` keyword
       products: formattedProducts,
       totalAmount,
     });
