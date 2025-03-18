@@ -76,9 +76,17 @@ exports.getOrderDetails = async (req, res) => {
       return res.status(400).json({ error: "Invalid user ID or order ID" });
     }
 
+    // Validate userId and orderId
+    if (!mongoose.isValidObjectId(userId)) {
+      return res.status(400).json({ error: "Invalid user ID" });
+    }
+    if (!mongoose.isValidObjectId(orderId)) {
+      return res.status(400).json({ error: "Invalid order ID" });
+    }
+
     const order = await Order.findOne({
-      userId: new mongoose.Types.ObjectId(userId),
-      _id: new mongoose.Types.ObjectId(orderId),
+      userId: mongoose.Types.ObjectId(userId), // Use `new` keyword
+      _id: mongoose.Types.ObjectId(orderId), // Use `new` keyword
     }).populate("products.productId"); // Populate product details if needed
 
     if (!order) {
