@@ -12,19 +12,19 @@ exports.placeOrder = async (req, res) => {
       return res.status(400).json({ error: "Missing required fields" });
     }
 
-    // Convert productId to ObjectId using the `new` keyword
+    // Ensure productId is a number
     const formattedProducts = products.map((product) => {
-      if (!mongoose.Types.ObjectId.isValid(product.productId)) {
+      if (typeof product.productId !== "number") {
         throw new Error(`Invalid productId: ${product.productId}`);
       }
       return {
         ...product,
-        productId: new mongoose.Types.ObjectId(product.productId), // Use `new` keyword
+        productId: product.productId, // Keep as number
       };
     });
 
     const order = new Order({
-      userId: new mongoose.Types.ObjectId(userId),
+      userId: mongoose.Types.ObjectId(userId), // Convert to ObjectId
       products: formattedProducts,
       totalAmount,
     });
@@ -87,14 +87,29 @@ exports.getOrderDetails = async (req, res) => {
     const order = await Order.findOne({
       userId: mongoose.Types.ObjectId(userId), // Use `new` keyword
       _id: mongoose.Types.ObjectId(orderId), // Use `new` keyword
-    }).populate("products.productId"); // Populate product details if needed
+    });
 
     if (!order) {
       console.error("Order not found for user:", userId);
       return res.status(404).json({ error: "Order not found for this user" });
     }
 
-    console.log("Order details found:", order);
+    // Fetch product details for each product in the order
+    const productsWithDetails = await Promise.all(
+      order.products.map(async (product) => {
+        const productDetails = await Product.findOne({
+          productId: product.productId,
+        });
+        return {
+          ...product.toObject(),
+          productDetails, // Add product details to the response
+        };
+      })
+    );
+
+    // Replace products array with products containing details
+    order.products = productsWithDetails;
+    
     res.status(200).json(order);
   } catch (error) {
     console.error("Error fetching order:", error);
