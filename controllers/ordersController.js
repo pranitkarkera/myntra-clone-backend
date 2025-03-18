@@ -1,6 +1,7 @@
 const Order = require("../models/orders.models");
 const Cart = require("../models/cart.models")
 const mongoose = require("mongoose");
+
 // Add a new order
 exports.placeOrder = async (req, res) => {
   try {
@@ -11,14 +12,19 @@ exports.placeOrder = async (req, res) => {
       return res.status(400).json({ error: "Missing required fields" });
     }
 
-    // Convert productId to ObjectId
-    const formattedProducts = products.map((product) => ({
-      ...product,
-      productId: mongoose.Types.ObjectId(product.productId),
-    }));
+    // Convert productId to ObjectId using the `new` keyword
+    const formattedProducts = products.map((product) => {
+      if (!mongoose.Types.ObjectId.isValid(product.productId)) {
+        throw new Error(`Invalid productId: ${product.productId}`);
+      }
+      return {
+        ...product,
+        productId: new mongoose.Types.ObjectId(product.productId), // Use `new` keyword
+      };
+    });
 
     const order = new Order({
-      userId: mongoose.Types.ObjectId(userId),
+      userId: new mongoose.Types.ObjectId(userId),
       products: formattedProducts,
       totalAmount,
     });
