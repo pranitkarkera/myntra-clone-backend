@@ -4,17 +4,17 @@ const ordersController = require("../controllers/ordersController");
 const ensureAuthenticated = require("../middleware/AuthMiddleware");
 
 router.post(
-  "/place-order",
+  "/:userId/place-order",
   ensureAuthenticated,
   ordersController.placeOrder
 );
 router.get(
-  "/history",
+  "/:userId/history",
   ensureAuthenticated,
   ordersController.getOrderHistory
 );
 router.get(
-  "/details/:orderId",
+  "/:userId/details/:orderId",
   ensureAuthenticated,
   ordersController.getOrderDetails
 );

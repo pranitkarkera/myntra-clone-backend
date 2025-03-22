@@ -6,7 +6,7 @@ const mongoose = require("mongoose");
 exports.placeOrder = async (req, res) => {
   try {
     const { products, totalAmount } = req.body;
-    const userId = req.user._id; // Get userId from decoded JWT
+    const { userId } = req.params; // Get userId from params
 
     if (!Array.isArray(products) || !products.length || !totalAmount) {
       return res.status(400).json({ error: "Missing required fields" });
@@ -44,7 +44,12 @@ exports.placeOrder = async (req, res) => {
 
 exports.getOrderHistory = async (req, res) => {
   try {
-    const userId = req.user._id; // Get userId from decoded JWT
+    const { userId } = req.params; // Get userId from params
+
+    // Validate userId
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
+      return res.status(400).json({ error: "Invalid user ID" });
+    }
 
     const orders = await Order.find({ userId })
       .sort({ orderDate: -1 })
@@ -65,9 +70,12 @@ exports.getOrderHistory = async (req, res) => {
 
 exports.getOrderDetails = async (req, res) => {
   try {
-    const { orderId } = req.params; // Only get orderId from params
-    const userId = req.user._id; // Get userId from decoded JWT
+    const { orderId, userId } = req.params; // Get orderId and userId from params
 
+    // Validate userId and orderId
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
+      return res.status(400).json({ error: "Invalid user ID" });
+    }
     if (!orderId || !mongoose.Types.ObjectId.isValid(orderId)) {
       return res.status(400).json({ error: "Invalid order ID" });
     }
