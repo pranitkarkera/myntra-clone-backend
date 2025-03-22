@@ -5,26 +5,25 @@ const mongoose = require("mongoose");
 
 exports.placeOrder = async (req, res) => {
   try {
-    const { userId } = req.params;
     const { products, totalAmount } = req.body;
+    const userId = req.user._id; // Get userId from decoded JWT
 
-    if (!userId || !products || !totalAmount) {
+    if (!products || !totalAmount) {
       return res.status(400).json({ error: "Missing required fields" });
     }
 
-    // Validate userId
+    // Validate userId (no need for this check if using req.user)
     if (!mongoose.Types.ObjectId.isValid(userId)) {
       return res.status(400).json({ error: "Invalid user ID" });
     }
 
-    // Convert productId to ObjectId (if needed)
     const formattedProducts = products.map((product) => ({
       ...product,
-      productId: product.productId, // Keep as number (no conversion needed)
+      productId: product.productId,
     }));
 
     const order = new Order({
-      userId: new mongoose.Types.ObjectId(userId), // Use `new` keyword
+      userId: new mongoose.Types.ObjectId(userId),
       products: formattedProducts,
       totalAmount,
     });
@@ -40,18 +39,13 @@ exports.placeOrder = async (req, res) => {
   }
 };
 
-// Get order history for a user
 exports.getOrderHistory = async (req, res) => {
   try {
-    const userId = req.user._id;
-
-    if (!userId) {
-      return res.status(400).json({ error: "Invalid user ID" });
-    }
+    const userId = req.user._id; // Get userId from decoded JWT
 
     const orders = await Order.find({ userId })
       .sort({ orderDate: -1 })
-      .populate("products.productId"); // Populate product details if needed
+      .populate("products.productId");
 
     if (orders.length === 0) {
       return res.status(404).json({ error: "No orders found" });
@@ -63,34 +57,25 @@ exports.getOrderHistory = async (req, res) => {
   }
 };
 
-// Get specific order details by order ID
 exports.getOrderDetails = async (req, res) => {
   try {
-    console.log("Incoming request params:", req.params);
-    console.log("Decoded JWT user:", req.user);
+    const { orderId } = req.params; // Only get orderId from params
+    const userId = req.user._id; // Get userId from decoded JWT
 
-    const { userId, orderId } = req.params;
-
-    if (!userId || !orderId) {
-      console.error("Missing parameters:", { userId, orderId });
-      return res.status(400).json({ error: "Invalid user ID or order ID" });
+    if (!orderId) {
+      return res.status(400).json({ error: "Invalid order ID" });
     }
 
-    // Validate userId and orderId
-    if (!mongoose.isValidObjectId(userId)) {
-      return res.status(400).json({ error: "Invalid user ID" });
-    }
     if (!mongoose.isValidObjectId(orderId)) {
       return res.status(400).json({ error: "Invalid order ID" });
     }
 
     const order = await Order.findOne({
-      userId: mongoose.Types.ObjectId(userId), // Use `new` keyword
-      _id: mongoose.Types.ObjectId(orderId), // Use `new` keyword
+      userId: mongoose.Types.ObjectId(userId),
+      _id: mongoose.Types.ObjectId(orderId),
     });
 
     if (!order) {
-      console.error("Order not found for user:", userId);
       return res.status(404).json({ error: "Order not found for this user" });
     }
 
@@ -102,17 +87,15 @@ exports.getOrderDetails = async (req, res) => {
         });
         return {
           ...product.toObject(),
-          productDetails, // Add product details to the response
+          productDetails,
         };
       })
     );
 
-    // Replace products array with products containing details
     order.products = productsWithDetails;
 
     res.status(200).json(order);
   } catch (error) {
-    console.error("Error fetching order:", error);
     res.status(500).json({ error: error.message });
   }
 };
