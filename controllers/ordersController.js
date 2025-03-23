@@ -42,33 +42,67 @@ exports.placeOrder = async (req, res) => {
   }
 };
 
-exports.getOrderDetails = async (req, res) => {
+exports.getOrderHistory = async (req, res) => {
   try {
-    const { orderId, userId } = req.params; // Get orderId and userId from params
+    const { userId } = req.params; // Get userId from params
 
-    // Validate userId and orderId
+    // Validate userId
     if (!mongoose.Types.ObjectId.isValid(userId)) {
       return res.status(400).json({ error: "Invalid user ID" });
     }
-    if (!orderId || !mongoose.Types.ObjectId.isValid(orderId)) {
+
+    const orders = await Order.find({ userId })
+      .sort({ orderDate: -1 })
+      .populate("products.productId");
+
+    if (!orders.length) {
+      return res.status(404).json({ error: "No orders found" });
+    }
+
+    res.status(200).json(orders);
+  } catch (error) {
+    console.error("Error fetching order history:", error);
+    res
+      .status(500)
+      .json({ error: "An error occurred while fetching order history." });
+  }
+};
+
+exports.getOrderDetails = async (req, res) => {
+  try {
+    const { orderId, userId } = req.params;
+
+    // Add validation
+    console.log(`Request received for order ${orderId}, user ${userId}`);
+
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
+      console.error("Invalid user ID:", userId);
+      return res.status(400).json({ error: "Invalid user ID" });
+    }
+    if (!mongoose.Types.ObjectId.isValid(orderId)) {
+      console.error("Invalid order ID:", orderId);
       return res.status(400).json({ error: "Invalid order ID" });
     }
 
     const order = await Order.findOne({
-      userId: mongoose.Types.ObjectId(userId), // Ensure this is a valid ObjectId
-      _id: mongoose.Types.ObjectId(orderId), // Ensure this is a valid ObjectId
+      _id: new mongoose.Types.ObjectId(orderId),
+      userId: new mongoose.Types.ObjectId(userId),
     });
 
+    console.log("Found order:", order);
+
     if (!order) {
+      console.error("Order not found");
       return res.status(404).json({ error: "Order not found for this user" });
     }
 
-    // Fetch product details for each product in the order
+    // Fetch product details using correct field name
     const productsWithDetails = await Promise.all(
       order.products.map(async (product) => {
         const productDetails = await Product.findOne({
-          productId: product.productId,
+          productId: product.productId, // Match productId in Product model
         });
+        console.log(`Product ${product.productId} details:`, productDetails);
         return {
           ...product.toObject(),
           productDetails,
@@ -77,12 +111,15 @@ exports.getOrderDetails = async (req, res) => {
     );
 
     order.products = productsWithDetails;
-
     res.status(200).json(order);
   } catch (error) {
-    console.error("Error fetching order details:", error);
-    res
-      .status(500)
-      .json({ error: "An error occurred while fetching order details." });
+    console.error("Error in getOrderDetails:", error);
+    res.status(500).json({
+      error: "Internal server error",
+      message: error.message,
+      stack: error.stack,
+    });
   }
 };
+
+
