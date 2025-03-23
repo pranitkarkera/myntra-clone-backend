@@ -42,32 +42,6 @@ exports.placeOrder = async (req, res) => {
   }
 };
 
-exports.getOrderHistory = async (req, res) => {
-  try {
-    const { userId } = req.params; // Get userId from params
-
-    // Validate userId
-    if (!mongoose.Types.ObjectId.isValid(userId)) {
-      return res.status(400).json({ error: "Invalid user ID" });
-    }
-
-    const orders = await Order.find({ userId })
-      .sort({ orderDate: -1 })
-      .populate("products.productId");
-
-    if (!orders.length) {
-      return res.status(404).json({ error: "No orders found" });
-    }
-
-    res.status(200).json(orders);
-  } catch (error) {
-    console.error("Error fetching order history:", error);
-    res
-      .status(500)
-      .json({ error: "An error occurred while fetching order history." });
-  }
-};
-
 exports.getOrderDetails = async (req, res) => {
   try {
     const { orderId, userId } = req.params; // Get orderId and userId from params
@@ -81,8 +55,8 @@ exports.getOrderDetails = async (req, res) => {
     }
 
     const order = await Order.findOne({
-      userId: mongoose.Types.ObjectId(userId),
-      _id: mongoose.Types.ObjectId(orderId),
+      userId: mongoose.Types.ObjectId(userId), // Ensure this is a valid ObjectId
+      _id: mongoose.Types.ObjectId(orderId), // Ensure this is a valid ObjectId
     });
 
     if (!order) {
