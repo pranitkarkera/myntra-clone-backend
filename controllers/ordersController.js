@@ -6,7 +6,7 @@ const mongoose = require("mongoose");
 exports.placeOrder = async (req, res) => {
   try {
     const { products, totalAmount } = req.body;
-    const { userId } = req.params; // Get userId from params
+    const { userId } = req.params;
 
     if (!Array.isArray(products) || !products.length || !totalAmount) {
       return res.status(400).json({ error: "Missing required fields" });
@@ -96,11 +96,11 @@ exports.getOrderDetails = async (req, res) => {
       return res.status(404).json({ error: "Order not found for this user" });
     }
 
-    // Fetch product details using correct field name
+  
     const productsWithDetails = await Promise.all(
       order.products.map(async (product) => {
         const productDetails = await Product.findOne({
-          productId: product.productId, // Match productId in Product model
+          productId: product.productId, 
         });
         console.log(`Product ${product.productId} details:`, productDetails);
         return {
